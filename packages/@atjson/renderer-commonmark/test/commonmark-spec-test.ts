@@ -13,14 +13,22 @@ const skippedTests = [
   491  // Alt text that is never used
 ];
 
-const unitTestsBySection: { [moduleName: string]: spec.tests } = spec.tests.reduce((modules, unitTest) => {
+interface TestPartition {
+  [moduleName: string]: Array<{
+    markdown: string;
+    html: string;
+    number: number;
+  }>;
+}
+
+const partitionedTests = spec.tests.reduce((modules: TestPartition, unitTest) => {
   if (!modules[unitTest.section]) modules[unitTest.section] = [];
   modules[unitTest.section].push(unitTest);
   return modules;
-}, {});
+}, {} as TestPartition);
 
-Object.keys(unitTestsBySection).forEach(moduleName => {
-  const unitTests = unitTestsBySection[moduleName];
+Object.keys(partitionedTests).forEach(moduleName => {
+  const unitTests = partitionedTests[moduleName];
 
   describe(moduleName, () => {
     unitTests.forEach(unitTest => {
