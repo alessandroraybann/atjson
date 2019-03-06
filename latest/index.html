@@ -1,0 +1,543 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@atjson</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@atjson</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @atjson</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="atjson-build-status-license-maintainability-test-coverage">AtJSON <a href="https://travis-ci.org/CondeNast-Copilot/atjson"><img src="https://travis-ci.org/CondeNast-Copilot/atjson.svg?branch=latest" alt="Build Status"></a> <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a> <a href="https://codeclimate.com/github/CondeNast-Copilot/atjson/maintainability"><img src="https://api.codeclimate.com/v1/badges/a4eed5bcb8b887166f49/maintainability" alt="Maintainability"></a> <a href="https://codeclimate.com/github/CondeNast-Copilot/atjson/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a4eed5bcb8b887166f49/test_coverage" alt="Test Coverage"></a></h1>
+				<h2 id="maintainers">Maintainers</h2>
+				<ul>
+					<li>Tim Evans (@tim-evans <a href="mailto:tim_evans@condenast.com">tim_evans@condenast.com</a>)</li>
+					<li>Blaine Cook (@blaine <a href="mailto:blaine_cook@condenast.com">blaine_cook@condenast.com</a>)</li>
+				</ul>
+				<hr>
+				<p>AtJSON is a collection of repositories that together make up a fully-realized content format.</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Quick Links</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><a href="#how-does-a-document-get-rendered">How does a document get rendered?</a></td>
+						</tr>
+						<tr>
+							<td><a href="#how-do-i-use-existing-documents">How do I use existing documents?</a></td>
+						</tr>
+						<tr>
+							<td><a href="#how-do-i-create-a-new-document">How do I create a new document?</a></td>
+						</tr>
+				</tbody></table>
+				<p>The breakdown of modules in this repository are:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Modules</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><a href="packages/@atjson/document">@atjson/document</a></td>
+							<td>AtJSON document and annotation code</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/hir">@atjson/hir</a></td>
+							<td>HIR (Hierarchical Intermediate Representation)</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/renderer-hir">@atjson/renderer-hir</a></td>
+							<td>Abstract base class for text-based output</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/renderer-graphviz">@atjson/renderer-graphviz</a></td>
+							<td>Used to visualise the HIR of a document</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/renderer-plain-text">@atjson/renderer-plain-text</a></td>
+							<td>Plain text output</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/renderer-react">@atjson/renderer-react</a></td>
+							<td>React output</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/renderer-commonmark">@atjson/renderer-commonmark</a></td>
+							<td>CommonMark output</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-commonmark">@atjson/source-commonmark</a></td>
+							<td>Conversion of CommonMark sources to AtJSON</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-gdocs-paste">@atjson/source-gdocs-paste</a></td>
+							<td>A source used to transform Google Docs Paste buffers into AtJSON</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-html">@atjson/source-html</a></td>
+							<td>Conversion of HTML sources to AtJSON</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-mobiledoc">@atjson/source-mobiledoc</a></td>
+							<td>A source used to transform Mobiledoc into AtJSON</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-prism">@atjson/source-prism</a></td>
+							<td>Conversion of <a href="http://www.prismstandard.org/specifications/">PRISM</a>-compliant XML documents into AtJSON</td>
+						</tr>
+						<tr>
+							<td><a href="packages/@atjson/source-url">@atjson/source-url</a></td>
+							<td>Turn URLs into rich embeds</td>
+						</tr>
+				</tbody></table>
+				<h4 id="why-another-content-format-">Why another content format?</h4>
+				<p>Our goals at Condé Nast are to provide best-in-class content to our readers, and best-in-class tools for our editors. To do this, we need a format that can be rich, extensible, and portable. It is important that the content source provide little ambiguity about <em>how</em> a story should be displayed.</p>
+				<p>For Condé Nast, it is essential for our stories to be a format that doesn&#39;t age quickly- we have over a hundred years of articles from publications across the world. It is extremely important for us to be able to put these stories written for digital media in our archive for the future. Many current content formats do not strive for rigorousness in this, instead tying the constraints of the format to the current platform of choice. When constructing this format, we chose to separate the original text from the data associated for this purpose.</p>
+				<h4 id="what-does-a-document-look-like-">What does a document look like?</h4>
+				<p>A document has a <code>content</code> field and a list of <code>annotations</code>, each of which have a spatial offset in the document.</p>
+				<p>The simplest document is one without annotations:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-string">"content"</span>: <span class="hljs-string">"Hello"</span>
+  <span class="hljs-string">"annotations"</span>: []
+}</code></pre>
+				<p>Stylistic annotations are easily layered on a document using a positional annotation:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-string">"content"</span>: <span class="hljs-string">"The best writing anywhere, everywhere."</span>,
+  <span class="hljs-string">"annotations"</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+    <span class="hljs-attr">start</span>: <span class="hljs-number">4</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">8</span>,
+    <span class="hljs-attr">attributes</span>: {}
+  }]
+}</code></pre>
+				<p>This document looks like:</p>
+				<blockquote>
+					<p>The <em>best</em> writing anywhere, everywhere.</p>
+				</blockquote>
+				<p>Positions represent the space <em>in-between</em> characters in the document. That means an annotation that starts at 0 starts before any character in the document. How the indexing works is as the following:</p>
+				<pre><code> <span class="hljs-attribute">H</span> e l l o<span class="hljs-regexp">
+^</span><span class="hljs-regexp"> ^</span><span class="hljs-regexp"> ^</span><span class="hljs-regexp"> ^</span><span class="hljs-regexp"> ^</span><span class="hljs-regexp"> ^</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span></code></pre><h4 id="what-can-i-use-annotations-for-">What can I use annotations for?</h4>
+				<p>Annotations can be used for anything to describe the content.</p>
+				<p>Some common annotations for editorial purposes are comments and suggestions. Comments use annotation offsets to comment on a specific portion of the document:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-string">"content"</span>: <span class="hljs-string">"Cat Person"</span>,
+  <span class="hljs-string">"annotations"</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"comment"</span>,
+    <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">9</span>
+    attributes: {
+      <span class="hljs-attr">author</span>: <span class="hljs-string">"Eustace Tilley"</span>,
+      <span class="hljs-attr">writtenAt</span>: <span class="hljs-string">"2018-01-05 21:00T"</span>
+      comment: <span class="hljs-string">"What about dog people?"</span>
+    }
+  }]
+}</code></pre>
+				<p>In addition to comments, suggestions can be made to the text in the same manner as comments:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-string">"content"</span>: <span class="hljs-string">"Reeducation"</span>,
+  <span class="hljs-string">"annotations"</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"suggested-replacement"</span>,
+    <span class="hljs-attr">start</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">3</span>
+    attributes: {
+      <span class="hljs-attr">text</span>: <span class="hljs-string">"ë"</span>,
+      <span class="hljs-attr">author</span>: <span class="hljs-string">"Eustace Tilley"</span>,
+      <span class="hljs-attr">suggestedAt</span>: <span class="hljs-string">"2018-01-10 23:00T"</span>
+    }
+  }]
+}</code></pre>
+				<p>Objects can also be embedded in documents that can be expanded when the document is reified to its final output:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-string">"content"</span>: <span class="hljs-string">"￼"</span>,
+  <span class="hljs-string">"annotations"</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"image"</span>,
+    <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">attributes</span>: {
+      <span class="hljs-attr">alt</span>: <span class="hljs-string">"Logo"</span>,
+      <span class="hljs-attr">url</span>: <span class="hljs-string">""</span>
+    }
+  }]
+}</code></pre>
+				<h3 id="how-does-a-document-get-rendered-">How does a document get rendered?</h3>
+				<p>We have a source document with annotations:</p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/original-document.png" alt="War and Peace"></p>
+				<p>This marked up document equates to:</p>
+				<pre><code>War <span class="hljs-keyword">and</span> Peace
+Part First
+Chapter I.
+
+“Well, prince, Genoa <span class="hljs-keyword">and</span> Lucca are now nothing more than apanages, than <span class="hljs-keyword">the</span> private <span class="hljs-keyword">property</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Bonaparte family. I warn you <span class="hljs-keyword">that</span> <span class="hljs-keyword">if</span> you do <span class="hljs-keyword">not</span> <span class="hljs-keyword">tell</span> <span class="hljs-keyword">me</span> we are going <span class="hljs-keyword">to</span> have war, <span class="hljs-keyword">if</span> you still allow yourself <span class="hljs-keyword">to</span> condone all <span class="hljs-keyword">the</span> infamies, all <span class="hljs-keyword">the</span> atrocities <span class="hljs-keyword">of</span> this Antichrist — <span class="hljs-keyword">on</span> <span class="hljs-keyword">my</span> <span class="hljs-built_in">word</span> I believe he <span class="hljs-keyword">is</span> Antichrist — <span class="hljs-keyword">that</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">end</span> <span class="hljs-keyword">of</span> acquaintance; you are no longer <span class="hljs-keyword">my</span> friend, you are no longer <span class="hljs-keyword">my</span> faithful slave, <span class="hljs-keyword">as</span> you call yourself. Now, be <span class="hljs-keyword">of</span> good courage, I see I frighten you. Come, sit down <span class="hljs-keyword">and</span> <span class="hljs-keyword">tell</span> <span class="hljs-keyword">me</span> all <span class="hljs-keyword">about</span> <span class="hljs-keyword">it</span>.”
+
+It was <span class="hljs-keyword">on</span> a July evening, <span class="hljs-number">1805</span>, <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> famous Anna Pavlovna Scherer, maid <span class="hljs-keyword">of</span> honor <span class="hljs-keyword">and</span> confidant <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Empress Maria Feodorovna, thus greeted <span class="hljs-keyword">the</span> influential statesman, Prince Vasili, who was <span class="hljs-keyword">the</span> <span class="hljs-keyword">first</span> <span class="hljs-keyword">to</span> arrive <span class="hljs-keyword">at</span> her reception.
+
+Anna Pavlovna had been coughing <span class="hljs-keyword">for</span> several days; she had <span class="hljs-keyword">the</span> grippe, <span class="hljs-keyword">as</span> she affected <span class="hljs-keyword">to</span> call her influenza — grippe <span class="hljs-keyword">at</span> <span class="hljs-keyword">that</span> <span class="hljs-built_in">time</span> being a new <span class="hljs-built_in">word</span> only occasionally employed.
+
+A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span> little notes distributed <span class="hljs-keyword">that</span> morning <span class="hljs-keyword">by</span> a footman <span class="hljs-keyword">in</span> red livery had been all couched <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> same terms:—
+
+“If you have nothing better <span class="hljs-keyword">to</span> do, M. le Comte (<span class="hljs-keyword">or</span> mon Prince), <span class="hljs-keyword">and</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">the</span> prospect <span class="hljs-keyword">of</span> spending <span class="hljs-keyword">the</span> evening <span class="hljs-keyword">with</span> a poor invalid <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> too dismal, I shall be charmed <span class="hljs-keyword">to</span> see you <span class="hljs-keyword">at</span> <span class="hljs-keyword">my</span> house <span class="hljs-keyword">between</span> seven <span class="hljs-keyword">and</span> ten. Annette Scherer”
+
+“Oh! what a savage attack!” rejoined <span class="hljs-keyword">the</span> prince, <span class="hljs-keyword">as</span> he came forward <span class="hljs-keyword">in</span> his embroidered tourt uniform, stockings, <span class="hljs-keyword">and</span> diamond-buckled shoes, <span class="hljs-keyword">and</span> <span class="hljs-keyword">with</span> an expression <span class="hljs-keyword">of</span> seren—</code></pre><pre><code class="language-js">[{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"heading"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">13</span>,
+  <span class="hljs-attr">attributes</span>: {
+    <span class="hljs-attr">level</span>: <span class="hljs-number">1</span>
+  }
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">38</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">42</span>
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"footnote"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">37</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">478</span>,
+  <span class="hljs-attr">attributes</span>: {
+    <span class="hljs-attr">note</span>: <span class="hljs-string">"In the fifth edition of Count Tolstoï's works, this conversation is in a mixture of French and Russian. In the seventh (1887) the Russian entirely replaces the French — N. H. D."</span>
+  }
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">863</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">869</span>
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">911</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">917</span>
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"block-quote"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">1096</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">1324</span>
+}, {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">1308</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">1323</span>
+}]</code></pre>
+				<p>This visually would look like:</p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/annotated-document.png" alt="War and Peace"></p>
+				<p>From here, we construct a hierarchical intermediate representation of the content.</p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/hir-document.png" alt="War and Peace"></p>
+				<p>In JSON, this would roughly look like:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"document"</span>,
+  <span class="hljs-attr">children</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"title"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"War and Peace"</span>]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"horizontal-rule"</span>,
+    <span class="hljs-attr">children</span>: []
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"part"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Part One"</span>]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"chapter"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Chapter I."</span>]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"“"</span>, {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>,
+      <span class="hljs-attr">children</span>: <span class="hljs-string">"Well"</span>
+    }, <span class="hljs-string">", prince, Genoa and Lucca are now nothing more than apanages, than the private property of the Bonaparte family. I warn you that if you do not tell me we are going to have war, if you still allow yourself to condone all the infamies, all the atrocities of this Antichrist — on my word I believe he is Antichrist — that is the end of acquaintance; you are no longer my friend, you are no longer my faithful slave, as you call yourself."</span>, {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"footnote"</span>,
+      <span class="hljs-attr">attributes</span>: {
+        <span class="hljs-attr">note</span>: <span class="hljs-string">"In the fifth edition of Count Tolstoï's works, this conversation is in a mixture of French and Russian. In the seventh (1887) the Russian entirely replaces the French — N. H. D."</span>
+      }
+    }, <span class="hljs-string">"Now, be of good courage, I see I frighten you. Come, sit down and tell me all about it.”"</span>
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"It was on a July evening, 1805, that the famous Anna Pavlovna Scherer, maid of honor and confidant of the Empress Maria Feodorovna, thus greeted the influential statesman, Prince Vasili, who was the first to arrive at her reception."</span>]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Anna Pavlovna had been coughing for several days; she had the "</span>, {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+      <span class="hljs-attr">children</span>: [<span class="hljs-string">"grippe"</span>]
+    }, <span class="hljs-string">", as she affected to call her influenza — "</span>, {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+      <span class="hljs-attr">children</span>: [<span class="hljs-string">"grippe"</span>],
+    }, <span class="hljs-string">" at that time being a new word only occasionally employed."</span>
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"A number of little notes distributed that morning by a footman in red livery had been all couched in the same terms:—"</span>]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [{
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"blockquote"</span>,
+      <span class="hljs-attr">children</span>: [<span class="hljs-string">"“If you have nothing better to do, M. le Comte (or mon Prince), and if the prospect of spending the evening with a poor invalid is not too dismal, I shall be charmed to see you at my house between seven and ten. "</span>, {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>
+        children: [<span class="hljs-string">"Annette Scherer"</span>]
+      }, <span class="hljs-string">"”"</span>]
+    }]
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
+    <span class="hljs-attr">children</span>: [<span class="hljs-string">"“Oh! what a savage attack!” rejoined the prince, as he came forward in his embroidered tourt uniform, stockings, and diamond-buckled shoes, and with an expression of seren—"</span>]
+  }]
+}</code></pre>
+				<p>This intermediate form allows us to generate output by walking the representation and having a class render the output for that node.</p>
+				<p>Creating an output is pretty straightforward, and requires no knowledge about the content format. You need to know about the annotations and what attributes they may contain. Generating output based on the hierarchical representation is straightforward and minimal.</p>
+				<p>Generating an HTML document from a document is all of this code:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> Renderer, { escapeHTML } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-hir'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HTMLOutput</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Renderer</span> </span>{
+  renderText(text: string): string {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Text(escapeHTML(text));
+  }
+
+  *renderAnnotation(annotation) {
+    <span class="hljs-keyword">let</span> element = <span class="hljs-built_in">document</span>.createElement(annotation.type);
+    <span class="hljs-built_in">Object</span>.assign(element, annotation.attributes);
+    <span class="hljs-keyword">let</span> children = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> child <span class="hljs-keyword">in</span> children) {
+      element.appendChild(child);
+    }
+    <span class="hljs-keyword">return</span> element;
+  }
+};</code></pre>
+				<p>The <code>renderText</code> method is called for every chunk of text in the document, to provide the ability to escape HTML or in the case above, create DOM text nodes from the text. <code>renderAnnotation</code> is a generator method that is called for each annotation in the document. When implementing this function, you must <code>yield</code> so annotations that are nested under the current one you&#39;re working on are surfaced.</p>
+				<p>We provide some libraries for generating markdown from an AtJSON document, with handlers for each of the types. It provides a way to extend markdown output for more sophisticated use cases, and generating blobs of markdown from a specific annotation.</p>
+				<h2 id="how-do-i-use-existing-documents-">How do I use existing documents? </h2>
+				<p>AtJSON documents can be constructed from other sources. A source document is parsed and has annotations added to it, resulting in a normalized AtJSON document.</p>
+				<p>A markdown document, much like the one being written here, can be represented in AtJSON by annotating the document with the markup.</p>
+				<p>This can be done using our built-in parser:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> CommonMarkSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-commonmark'</span>;
+
+<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = <span class="hljs-keyword">new</span> CommonMarkSource(<span class="hljs-string">"# Hello, world"</span>).toAtJSON();</code></pre>
+				<p>This will result in the following document:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">content</span>: <span class="hljs-string">"# Hello, world"</span>,
+  <span class="hljs-attr">annotations</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"heading"</span>,
+    <span class="hljs-attr">attributes</span>: {
+      <span class="hljs-attr">level</span>: <span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">14</span>
+  }, {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"parse-token"</span>,
+    <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">2</span>
+  }]
+}</code></pre>
+				<p>The resulting document in AtJSON is the same as the source document— we take advantage of an internal annotation called a <code>parse-token</code>, which we remove from the document during the output phase.</p>
+				<p>When the intermediate representation is created, this document will be altered to look like:</p>
+				<pre><code class="language-js">{
+  <span class="hljs-attr">content</span>: <span class="hljs-string">"Hello, world"</span>,
+  <span class="hljs-attr">annotations</span>: [{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"heading"</span>,
+    <span class="hljs-attr">attributes</span>: {
+      <span class="hljs-attr">level</span>: <span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">end</span>: <span class="hljs-number">12</span>
+  }]
+}</code></pre>
+				<h2 id="how-do-i-create-a-new-document-">How do I create a new document?</h2>
+				<p>Documents can have annotations and text dynamically added and deleted from them. The APIs for this are designed to be easy-to-use (if they&#39;re not, please let us know :sweat_smile:)</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> Document <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/document'</span>;
+
+<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = <span class="hljs-keyword">new</span> Document();
+<span class="hljs-built_in">document</span>.insertText(<span class="hljs-number">0</span>, <span class="hljs-string">'Hello!'</span>);
+<span class="hljs-built_in">document</span>.addAnnotations({
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"bold"</span>,
+  <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">end</span>: <span class="hljs-number">6</span>
+});
+
+<span class="hljs-comment">// This should extend the annotation</span>
+<span class="hljs-built_in">document</span>.insertText(<span class="hljs-number">5</span>, <span class="hljs-string">" folks"</span>);
+
+<span class="hljs-comment">// This will remove the text that covers this annotation,</span>
+<span class="hljs-comment">// resulting in an empty document</span>
+<span class="hljs-built_in">document</span>.removeText(<span class="hljs-built_in">document</span>.annotations[<span class="hljs-number">0</span>]);</code></pre>
+				<h2 id="contributing">Contributing</h2>
+				<p>See the guide in <a href="CONTRIBUTING.md">Contributing</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_document.html">@atjson/document</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_hir.html">@atjson/hir</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_offset_annotations.html">@atjson/offset-<wbr>annotations</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_offset_core_components.html">@atjson/offset-<wbr>core-<wbr>components</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_commonmark.html">@atjson/renderer-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_graphviz.html">@atjson/renderer-<wbr>graphviz</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_hir.html">@atjson/renderer-<wbr>hir</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_plain_text.html">@atjson/renderer-<wbr>plain-<wbr>text</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_react.html">@atjson/renderer-<wbr>react</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_renderer_webcomponent.html">@atjson/renderer-<wbr>webcomponent</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_commonmark.html">@atjson/source-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_gdocs_paste.html">@atjson/source-<wbr>gdocs-<wbr>paste</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_html.html">@atjson/source-<wbr>html</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_mobiledoc.html">@atjson/source-<wbr>mobiledoc</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_prism.html">@atjson/source-<wbr>prism</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_atjson_source_url.html">@atjson/source-<wbr>url</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
