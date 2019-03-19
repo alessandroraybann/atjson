@@ -163,7 +163,7 @@
 				<pre><code class="language-js">{
   <span class="hljs-string">"content"</span>: <span class="hljs-string">"The best writing anywhere, everywhere."</span>,
   <span class="hljs-string">"annotations"</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-offset-Italic"</span>,
     <span class="hljs-attr">start</span>: <span class="hljs-number">4</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">8</span>,
     <span class="hljs-attr">attributes</span>: {}
@@ -182,13 +182,13 @@
 				<pre><code class="language-js">{
   <span class="hljs-string">"content"</span>: <span class="hljs-string">"Cat Person"</span>,
   <span class="hljs-string">"annotations"</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"comment"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-offset-comment"</span>,
     <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">9</span>
     attributes: {
-      <span class="hljs-attr">author</span>: <span class="hljs-string">"Eustace Tilley"</span>,
-      <span class="hljs-attr">writtenAt</span>: <span class="hljs-string">"2018-01-05 21:00T"</span>
-      comment: <span class="hljs-string">"What about dog people?"</span>
+      <span class="hljs-string">'-offset-author'</span>: <span class="hljs-string">"Eustace Tilley"</span>,
+      <span class="hljs-string">'-offset-writtenAt'</span>: <span class="hljs-string">"2018-01-05 21:00T"</span>
+      <span class="hljs-string">'-offset-comment'</span>: <span class="hljs-string">"What about dog people?"</span>
     }
   }]
 }</code></pre>
@@ -196,13 +196,13 @@
 				<pre><code class="language-js">{
   <span class="hljs-string">"content"</span>: <span class="hljs-string">"Reeducation"</span>,
   <span class="hljs-string">"annotations"</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"suggested-replacement"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-offset-suggested-replacement"</span>,
     <span class="hljs-attr">start</span>: <span class="hljs-number">2</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">3</span>
     attributes: {
-      <span class="hljs-attr">text</span>: <span class="hljs-string">"ë"</span>,
-      <span class="hljs-attr">author</span>: <span class="hljs-string">"Eustace Tilley"</span>,
-      <span class="hljs-attr">suggestedAt</span>: <span class="hljs-string">"2018-01-10 23:00T"</span>
+      <span class="hljs-string">'-offset-text'</span>: <span class="hljs-string">"ë"</span>,
+      <span class="hljs-string">'-offset-author'</span>: <span class="hljs-string">"Eustace Tilley"</span>,
+      <span class="hljs-string">'-offset-suggestedAt'</span>: <span class="hljs-string">"2018-01-10 23:00T"</span>
     }
   }]
 }</code></pre>
@@ -210,18 +210,18 @@
 				<pre><code class="language-js">{
   <span class="hljs-string">"content"</span>: <span class="hljs-string">"￼"</span>,
   <span class="hljs-string">"annotations"</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"image"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-offset-image"</span>,
     <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">1</span>,
     <span class="hljs-attr">attributes</span>: {
-      <span class="hljs-attr">alt</span>: <span class="hljs-string">"Logo"</span>,
-      <span class="hljs-attr">url</span>: <span class="hljs-string">""</span>
+      <span class="hljs-string">'-offset-alt'</span>: <span class="hljs-string">"Logo"</span>,
+      <span class="hljs-string">'-offset-url'</span>: <span class="hljs-string">""</span>
     }
   }]
 }</code></pre>
 				<h3 id="how-does-a-document-get-rendered-">How does a document get rendered?</h3>
 				<p>We have a source document with annotations:</p>
-				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/original-document.png" alt="War and Peace"></p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/war-and-peace.png" alt="War and Peace"></p>
 				<p>This marked up document equates to:</p>
 				<pre><code>War <span class="hljs-keyword">and</span> Peace
 Part First
@@ -238,7 +238,7 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
 “If you have nothing better <span class="hljs-keyword">to</span> do, M. le Comte (<span class="hljs-keyword">or</span> mon Prince), <span class="hljs-keyword">and</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">the</span> prospect <span class="hljs-keyword">of</span> spending <span class="hljs-keyword">the</span> evening <span class="hljs-keyword">with</span> a poor invalid <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> too dismal, I shall be charmed <span class="hljs-keyword">to</span> see you <span class="hljs-keyword">at</span> <span class="hljs-keyword">my</span> house <span class="hljs-keyword">between</span> seven <span class="hljs-keyword">and</span> ten. Annette Scherer”
 
 “Oh! what a savage attack!” rejoined <span class="hljs-keyword">the</span> prince, <span class="hljs-keyword">as</span> he came forward <span class="hljs-keyword">in</span> his embroidered tourt uniform, stockings, <span class="hljs-keyword">and</span> diamond-buckled shoes, <span class="hljs-keyword">and</span> <span class="hljs-keyword">with</span> an expression <span class="hljs-keyword">of</span> seren—</code></pre><pre><code class="language-js">[{
-  <span class="hljs-attr">type</span>: <span class="hljs-string">"heading"</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"title"</span>,
   <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
   <span class="hljs-attr">end</span>: <span class="hljs-number">13</span>,
   <span class="hljs-attr">attributes</span>: {
@@ -264,7 +264,7 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
   <span class="hljs-attr">start</span>: <span class="hljs-number">911</span>,
   <span class="hljs-attr">end</span>: <span class="hljs-number">917</span>
 }, {
-  <span class="hljs-attr">type</span>: <span class="hljs-string">"block-quote"</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"blockquote"</span>,
   <span class="hljs-attr">start</span>: <span class="hljs-number">1096</span>,
   <span class="hljs-attr">end</span>: <span class="hljs-number">1324</span>
 }, {
@@ -273,65 +273,7 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
   <span class="hljs-attr">end</span>: <span class="hljs-number">1323</span>
 }]</code></pre>
 				<p>This visually would look like:</p>
-				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/annotated-document.png" alt="War and Peace"></p>
-				<p>From here, we construct a hierarchical intermediate representation of the content.</p>
-				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/hir-document.png" alt="War and Peace"></p>
-				<p>In JSON, this would roughly look like:</p>
-				<pre><code class="language-js">{
-  <span class="hljs-attr">type</span>: <span class="hljs-string">"document"</span>,
-  <span class="hljs-attr">children</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"title"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"War and Peace"</span>]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"horizontal-rule"</span>,
-    <span class="hljs-attr">children</span>: []
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"part"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Part One"</span>]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"chapter"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Chapter I."</span>]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"“"</span>, {
-      <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>,
-      <span class="hljs-attr">children</span>: <span class="hljs-string">"Well"</span>
-    }, <span class="hljs-string">", prince, Genoa and Lucca are now nothing more than apanages, than the private property of the Bonaparte family. I warn you that if you do not tell me we are going to have war, if you still allow yourself to condone all the infamies, all the atrocities of this Antichrist — on my word I believe he is Antichrist — that is the end of acquaintance; you are no longer my friend, you are no longer my faithful slave, as you call yourself."</span>, {
-      <span class="hljs-attr">type</span>: <span class="hljs-string">"footnote"</span>,
-      <span class="hljs-attr">attributes</span>: {
-        <span class="hljs-attr">note</span>: <span class="hljs-string">"In the fifth edition of Count Tolstoï's works, this conversation is in a mixture of French and Russian. In the seventh (1887) the Russian entirely replaces the French — N. H. D."</span>
-      }
-    }, <span class="hljs-string">"Now, be of good courage, I see I frighten you. Come, sit down and tell me all about it.”"</span>
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"It was on a July evening, 1805, that the famous Anna Pavlovna Scherer, maid of honor and confidant of the Empress Maria Feodorovna, thus greeted the influential statesman, Prince Vasili, who was the first to arrive at her reception."</span>]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"Anna Pavlovna had been coughing for several days; she had the "</span>, {
-      <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
-      <span class="hljs-attr">children</span>: [<span class="hljs-string">"grippe"</span>]
-    }, <span class="hljs-string">", as she affected to call her influenza — "</span>, {
-      <span class="hljs-attr">type</span>: <span class="hljs-string">"italic"</span>,
-      <span class="hljs-attr">children</span>: [<span class="hljs-string">"grippe"</span>],
-    }, <span class="hljs-string">" at that time being a new word only occasionally employed."</span>
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"A number of little notes distributed that morning by a footman in red livery had been all couched in the same terms:—"</span>]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [{
-      <span class="hljs-attr">type</span>: <span class="hljs-string">"blockquote"</span>,
-      <span class="hljs-attr">children</span>: [<span class="hljs-string">"“If you have nothing better to do, M. le Comte (or mon Prince), and if the prospect of spending the evening with a poor invalid is not too dismal, I shall be charmed to see you at my house between seven and ten. "</span>, {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">"small-caps"</span>
-        children: [<span class="hljs-string">"Annette Scherer"</span>]
-      }, <span class="hljs-string">"”"</span>]
-    }]
-  }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"paragraph"</span>,
-    <span class="hljs-attr">children</span>: [<span class="hljs-string">"“Oh! what a savage attack!” rejoined the prince, as he came forward in his embroidered tourt uniform, stockings, and diamond-buckled shoes, and with an expression of seren—"</span>]
-  }]
-}</code></pre>
-				<p>This intermediate form allows us to generate output by walking the representation and having a class render the output for that node.</p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/war-and-peace-annotated.png" alt="War and Peace"></p>
 				<p>Creating an output is pretty straightforward, and requires no knowledge about the content format. You need to know about the annotations and what attributes they may contain. Generating output based on the hierarchical representation is straightforward and minimal.</p>
 				<p>Generating an HTML document from a document is all of this code:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">import</span> Renderer, { escapeHTML } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-hir'</span>;
@@ -341,43 +283,71 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Text(escapeHTML(text));
   }
 
-  *renderAnnotation(annotation) {
-    <span class="hljs-keyword">let</span> element = <span class="hljs-built_in">document</span>.createElement(annotation.type);
-    <span class="hljs-built_in">Object</span>.assign(element, annotation.attributes);
-    <span class="hljs-keyword">let</span> children = <span class="hljs-keyword">yield</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> child <span class="hljs-keyword">in</span> children) {
-      element.appendChild(child);
+  *$(elementName: string, <span class="hljs-attr">attributes</span>: { [key: string]: string }) {
+    <span class="hljs-keyword">let</span> element = <span class="hljs-built_in">document</span>.createElement(elementName);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">of</span> attributes) {
+      <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'class'</span>) {
+        element.classList.add(attributes[key]);
+      } <span class="hljs-keyword">else</span> {
+        element.setAttribute(key, attributes[key]);
+      }
     }
+    element.appendChildren(<span class="hljs-keyword">yield</span>);
     <span class="hljs-keyword">return</span> element;
   }
-};</code></pre>
+
+  *Title() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'h1'</span>);
+  }
+
+  *Bold() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'strong'</span>);
+  }
+
+  *Blockquote() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'blockquote'</span>);
+  }
+
+  *Paragraph() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'p'</span>);
+  }
+
+  *Italic() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'em'</span>);
+  }
+
+  *SmallCaps() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">yield</span> *<span class="hljs-keyword">this</span>.$(<span class="hljs-string">'span'</span>, { <span class="hljs-attr">class</span>: <span class="hljs-string">'small-caps'</span> });
+  }
+}</code></pre>
 				<p>The <code>renderText</code> method is called for every chunk of text in the document, to provide the ability to escape HTML or in the case above, create DOM text nodes from the text. <code>renderAnnotation</code> is a generator method that is called for each annotation in the document. When implementing this function, you must <code>yield</code> so annotations that are nested under the current one you&#39;re working on are surfaced.</p>
 				<p>We provide some libraries for generating markdown from an AtJSON document, with handlers for each of the types. It provides a way to extend markdown output for more sophisticated use cases, and generating blobs of markdown from a specific annotation.</p>
-				<h2 id="how-do-i-use-existing-documents-">How do I use existing documents? </h2>
+				<h2 id="how-do-i-use-existing-documents-">How do I use existing documents?</h2>
 				<p>AtJSON documents can be constructed from other sources. A source document is parsed and has annotations added to it, resulting in a normalized AtJSON document.</p>
 				<p>A markdown document, much like the one being written here, can be represented in AtJSON by annotating the document with the markup.</p>
 				<p>This can be done using our built-in parser:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">import</span> CommonMarkSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-commonmark'</span>;
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> OffsetSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/offset-annotations'</span>;
+<span class="hljs-keyword">import</span> CommonMarkSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-commonmark'</span>;
 
-<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = <span class="hljs-keyword">new</span> CommonMarkSource(<span class="hljs-string">"# Hello, world"</span>).toAtJSON();</code></pre>
+<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = CommonMarkSource.fromRaw(<span class="hljs-string">"# Hello, world"</span>).convertTo(OffsetSource);</code></pre>
 				<p>This will result in the following document:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">content</span>: <span class="hljs-string">"# Hello, world"</span>,
   <span class="hljs-attr">annotations</span>: [{
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"heading"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-offset-heading"</span>,
     <span class="hljs-attr">attributes</span>: {
       <span class="hljs-attr">level</span>: <span class="hljs-number">1</span>
     },
     <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">14</span>
   }, {
-    <span class="hljs-attr">type</span>: <span class="hljs-string">"parse-token"</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"-atjson-parse-token"</span>,
     <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
     <span class="hljs-attr">end</span>: <span class="hljs-number">2</span>
   }]
 }</code></pre>
-				<p>The resulting document in AtJSON is the same as the source document— we take advantage of an internal annotation called a <code>parse-token</code>, which we remove from the document during the output phase.</p>
-				<p>When the intermediate representation is created, this document will be altered to look like:</p>
+				<p>The resulting document in AtJSON is the same as the source document— we take advantage of an internal annotation called a <code>ParseToken</code>, which we remove from the document during the output phase.</p>
+				<p>When rendering the document, text covered by parse tokens will be removed:</p>
 				<pre><code class="language-js">{
   <span class="hljs-attr">content</span>: <span class="hljs-string">"Hello, world"</span>,
   <span class="hljs-attr">annotations</span>: [{
@@ -391,15 +361,14 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
 }</code></pre>
 				<h2 id="how-do-i-create-a-new-document-">How do I create a new document?</h2>
 				<p>Documents can have annotations and text dynamically added and deleted from them. The APIs for this are designed to be easy-to-use (if they&#39;re not, please let us know :sweat_smile:)</p>
-				<pre><code class="language-js"><span class="hljs-keyword">import</span> Document <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/document'</span>;
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> OffsetSource, { Bold } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/offset-annotations'</span>;
 
-<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = <span class="hljs-keyword">new</span> Document();
+<span class="hljs-keyword">let</span> <span class="hljs-built_in">document</span> = <span class="hljs-keyword">new</span> OffsetSource();
 <span class="hljs-built_in">document</span>.insertText(<span class="hljs-number">0</span>, <span class="hljs-string">'Hello!'</span>);
-<span class="hljs-built_in">document</span>.addAnnotations({
-  <span class="hljs-attr">type</span>: <span class="hljs-string">"bold"</span>,
+<span class="hljs-built_in">document</span>.addAnnotations(<span class="hljs-keyword">new</span> Bold({
   <span class="hljs-attr">start</span>: <span class="hljs-number">0</span>,
   <span class="hljs-attr">end</span>: <span class="hljs-number">6</span>
-});
+}));
 
 <span class="hljs-comment">// This should extend the annotation</span>
 <span class="hljs-built_in">document</span>.insertText(<span class="hljs-number">5</span>, <span class="hljs-string">" folks"</span>);
