@@ -1,0 +1,846 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@atjson/document | @atjson</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@atjson</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="_atjson_document.html">@atjson/document</a>
+				</li>
+			</ul>
+			<h1>Module @atjson/document</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<h1 id="-atjson-document">🖋 @atjson/document</h1>
+					<p>The Document is the core component of AtJSON. It&#39;s a library that provides tools to create annotations and documents, query them, and convert between them. We&#39;ll walk through this in this, describing how to use AtJSON.</p>
+					<h2 id="-introduction-to-annotations">🎴 Introduction to Annotations</h2>
+					<p>Annotations are a term used in both writing and technology. In writing, annotations are marks on a page that is informative. They can be copy-editing notes or shorthand that dictates alterations of text. Software systems use them to add extra contextual information to existing data.</p>
+					<p>When we mention annotations in AtJSON, we primarily mean the software definition. We are marking up ranges of text that add more meaningful information to the text / document. What makes AtJSON a little different, is how we think of annotations.</p>
+					<p>Typically when dealing with text, we think of markup languages, like HTML, XML, and markdown. AtJSON can slurp up markup and represent it in terms of annotations. The important feature to note is that it does not distinguish between different types of markup. This is a flexible and powerful foundation, since it allows us to seamlessly convert and manipulate annotations in different formats as if they were the same format.</p>
+					<p>As an example markdown document like the following:</p>
+					<pre><code class="language-md"><span class="hljs-emphasis">*Roses*</span> are red,
+<span class="hljs-emphasis">*Violets*</span> are blue.</code></pre>
+					<p>Can be parsed into an AtJSON document by passing it into a source in AtJSON. A source is kind of like a parser, but is called a source because they use a parser, and normally we don&#39;t do any parsing in a source. Here we use AtJSON&#39;s built-in Commonmark source, which is a document format that supports all markdown features specified in the CommonMark spec.</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">import</span> CommonmarkSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-commonmark'</span>;
+
+CommonmarkSource.fromRaw(<span class="hljs-string">'*Roses* are red,  \n*Violets* are blue.'</span>);</code></pre>
+					<p>The result is a logical representation of the markdown document:</p>
+					<pre><code class="language-json">{
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"*Roses* are red,  \n*Violets* are blue."</span>,
+  <span class="hljs-attr">"annotations"</span>: [{
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-commonmark-em"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">7</span>,
+    <span class="hljs-attr">"attributes"</span>: {}
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-atjson-parse-token"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"attributes"</span>: {
+      <span class="hljs-attr">"-atjson-reason"</span>: <span class="hljs-string">"em_open"</span>
+    }
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-atjson-parse-token"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">6</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">7</span>,
+    <span class="hljs-attr">"attributes"</span>: {
+      <span class="hljs-attr">"-atjson-reason"</span>: <span class="hljs-string">"em_close"</span>
+    }
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-commonmark-hard_break"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">16</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">19</span>,
+    <span class="hljs-attr">"attributes"</span>: {}
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-commonmark-em"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">20</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">29</span>,
+    <span class="hljs-attr">"attributes"</span>: {}
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-atjson-parse-token"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">20</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">21</span>,
+    <span class="hljs-attr">"attributes"</span>: {
+      <span class="hljs-attr">"-atjson-reason"</span>: <span class="hljs-string">"em_open"</span>
+    }
+  }, {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-atjson-parse-token"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-number">28</span>,
+    <span class="hljs-attr">"end"</span>: <span class="hljs-number">29</span>,
+    <span class="hljs-attr">"attributes"</span>: {
+      <span class="hljs-attr">"-atjson-reason"</span>: <span class="hljs-string">"em_close"</span>
+    }
+  }]
+}</code></pre>
+					<p><strong>💁‍♀️ Notes</strong></p>
+					<blockquote>
+						<p>AtJSON stores annotations with vendor prefixes. These are meant to prevent collisions between different types of documents.</p>
+						<p>Positions indicate the position *between* characters, not the character boundary. This means <code>{ start: 0, end: 1 }</code> is over the first character of the content.</p>
+					</blockquote>
+					<p>Once the markdown is in AtJSON, we can start modifying the document.</p>
+					<h2 id="-documents">📝 Documents</h2>
+					<p>We skipped right to an example of using AtJSON directly, but let&#39;s backtrack a bit to explain the other core concept of AtJSON. Annotations can&#39;t live in the ether - they need something to latch onto. So we attach them to a Document. A document is the combination of content + annotations. The content, being for our purposes, text, and the annotations being a bunch of information about the text.</p>
+					<p>Above, the JSON blob is a raw look at the document.</p>
+					<p>Documents have associated annotation classes that will turn the JSON into a full annotation class that can be accessed without vendor prefixes.</p>
+					<p>As an intro into documents, let&#39;s create a small document definition that describes addresses:</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Document, { InlineAnnotation } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/document'</span>;
+
+<span class="hljs-keyword">class</span> Name <span class="hljs-keyword">extends</span> InlineAnnotation {
+  <span class="hljs-keyword">static</span> vendorPrefix = <span class="hljs-string">'address'</span>;
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">type</span> = <span class="hljs-string">'name'</span>;
+}
+
+<span class="hljs-keyword">class</span> AddressLine <span class="hljs-keyword">extends</span> InlineAnnotation {
+  <span class="hljs-keyword">static</span> vendorPrefix = <span class="hljs-string">'address'</span>;
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">type</span> = <span class="hljs-string">'line'</span>;
+}
+
+<span class="hljs-keyword">class</span> PostalCode <span class="hljs-keyword">extends</span> InlineAnnotation {
+  <span class="hljs-keyword">static</span> vendorPrefix = <span class="hljs-string">'address'</span>;
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">type</span> = <span class="hljs-string">'postal-code'</span>;
+}
+
+<span class="hljs-keyword">class</span> City <span class="hljs-keyword">extends</span> InlineAnnotation {
+  <span class="hljs-keyword">static</span> vendorPrefix = <span class="hljs-string">'address'</span>;
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">type</span> = <span class="hljs-string">'city'</span>;
+}
+
+<span class="hljs-keyword">class</span> Region <span class="hljs-keyword">extends</span> InlineAnnotation {
+  <span class="hljs-keyword">static</span> vendorPrefix = <span class="hljs-string">'address'</span>;
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">type</span> = <span class="hljs-string">'region'</span>;
+}
+
+<span class="hljs-keyword">class</span> Address <span class="hljs-keyword">extends</span> Document {
+  <span class="hljs-keyword">static</span> schema = [Name, AddressLine, PostalCode, City, Region];
+}</code></pre>
+					<p>This may seem like a weird example to use, but if we pull up our address for Condé Nast&#39;s NYC office:</p>
+					<pre><code>Condé Nast
+<span class="hljs-number">1</span> WTC
+New York, NY <span class="hljs-number">10006</span></code></pre><p>We can start marking this up with some annotations:</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">let</span> address = <span class="hljs-keyword">new</span> Address({
+  content: <span class="hljs-string">"Condé Nast\n1 WTC\nNew York, NY 10006"</span>,
+  annotations: []
+});
+
+address.addAnnotations(
+  <span class="hljs-keyword">new</span> Name({ start: <span class="hljs-number">0</span>, end: <span class="hljs-number">10</span> }),
+  <span class="hljs-keyword">new</span> AddressLine({ start: <span class="hljs-number">11</span>, end: <span class="hljs-number">16</span> }),
+  <span class="hljs-keyword">new</span> City({ start: <span class="hljs-number">17</span>, end: <span class="hljs-number">25</span> }),
+  <span class="hljs-keyword">new</span> Region({ start: <span class="hljs-number">27</span>, end: <span class="hljs-number">29</span> }),
+  <span class="hljs-keyword">new</span> PostalCode({ start: <span class="hljs-number">30</span>, end: <span class="hljs-number">35</span> })
+);</code></pre>
+					<p>It seems very arbitrary to store data this way. Why would we do this?</p>
+					<p>Well, we think this provides the most natural input mechanism for people, while providing robust machine reading capabilities. Documents provide tools that manage annotations so when text is added or removed it &quot;just works&quot; as expected. So, if we wanted to change the text here, and we inserted &quot; Entertainment&quot;  after &quot;Condé Nast&quot;, the annotations would remain intact, and in fact, would cover the correct text!</p>
+					<p>The flexibility here also means that we can render this address out into something more suitable for Google, such as JSONLD. We can use AtJSON&#39;s rendering here to take this document and turn it into something that can show a rich location card in search results. Note that in order to do this, we define a rendering rule for every annotation we&#39;ve defined thus far for our Address schema:</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Renderer <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-hir'</span>;
+
+<span class="hljs-keyword">class</span> JSONLDRenderer <span class="hljs-keyword">extends</span> Renderer {
+  <span class="hljs-keyword">private</span> jsonld: <span class="hljs-built_in">any</span>;
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">this</span>.jsonld = {
+      <span class="hljs-string">"@context"</span>: <span class="hljs-string">"https://schema.org"</span>,
+      <span class="hljs-string">"@type"</span>: <span class="hljs-string">"Place"</span>,
+      <span class="hljs-string">"address"</span>: {
+        <span class="hljs-string">"@type"</span>: <span class="hljs-string">"PostalAddress"</span>
+      }
+    };
+  }
+
+  *Name() {
+    <span class="hljs-keyword">let</span> name = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">this</span>.jsonld.name = name.join(<span class="hljs-string">''</span>);
+  }
+
+  *AddressLine() {
+    <span class="hljs-keyword">let</span> streetAddress = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">this</span>.jsonld.address.streetAddress = streetAddress.join(<span class="hljs-string">''</span>);
+  }
+
+  *City() {
+    <span class="hljs-keyword">let</span> addressLocality = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">this</span>.jsonld.address.addressLocality = addressLocality.join(<span class="hljs-string">''</span>);
+  }
+
+  *Region() {
+    <span class="hljs-keyword">let</span> addressRegion = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">this</span>.jsonld.address.addressRegion = addressRegion.join(<span class="hljs-string">''</span>);
+  }
+
+  *PostalCode() {
+    <span class="hljs-keyword">let</span> postalCode = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">this</span>.jsonld.address.postalCode = postalCode.join(<span class="hljs-string">''</span>);
+  }
+
+  *root() {
+    <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.jsonld;
+  }
+}</code></pre>
+					<p>Sending the document that we created through this would result in a JSON-LD object:</p>
+					<pre><code class="language-json">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"https://schema.org"</span>,
+  <span class="hljs-attr">"@type"</span>: <span class="hljs-string">"Place"</span>,
+  <span class="hljs-attr">"address"</span>: {
+    <span class="hljs-attr">"@type"</span>: <span class="hljs-string">"PostalAddress"</span>,
+    <span class="hljs-attr">"addressLocality"</span>: <span class="hljs-string">"New York"</span>,
+    <span class="hljs-attr">"addressRegion"</span>: <span class="hljs-string">"NY"</span>,
+    <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"10006"</span>
+  },
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Condé Nast"</span>
+}</code></pre>
+					<p>This was a bit of a whirlwind, but we think it provides a good example of ways that you can start thinking about how to use annotations!</p>
+					<p><strong>💁‍♀️ Notes</strong></p>
+					<blockquote>
+						<p>We call a defined document schema a &quot;source&quot;. They&#39;re not exactly parsers, since they represent the content in AtJSON in that format. I like to think of them like a source that a journalist has, where they collect information from that source and use it in their reporting.</p>
+					</blockquote>
+					<h2 id="-how-to-find-data-in-a-document">🔍 How to find data in a document</h2>
+					<p>Annotations in AtJSON can be treated like a little database. It&#39;s a little like how jQuery suddenly opened up the possibilities of what could be done on websites because you could do simple and elegant manipulation.</p>
+					<p>There&#39;s 2 levels of querying for documents. The first is partial matches:</p>
+					<pre><code class="language-typescript">doc.where({ <span class="hljs-keyword">type</span>: <span class="hljs-string">'-offset-link'</span> });</code></pre>
+					<p>This query will find all links in a document</p>
+					<p><strong>💁‍♀️ Notes</strong></p>
+					<blockquote>
+						<p>The partial match query language requires vendor prefixes</p>
+					</blockquote>
+					<p>The equivalent version of this using the function syntax would be:</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Link } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/offset-annotations'</span>;
+
+doc.where(<span class="hljs-function"><span class="hljs-params">annotation</span> =&gt;</span> annotation <span class="hljs-keyword">instanceof</span> Link);</code></pre>
+					<p><strong>💁‍♀️ Notes</strong></p>
+					<blockquote>
+						<p>The function syntax returns hydrated annotations. You may encounter Unknown annotations here, which are annotations that are unsupported by the document schema. Be careful! 👹</p>
+					</blockquote>
+					<h3 id="-a-note-about-unknown-annotations">👹A note about Unknown Annotations</h3>
+					<p>AtJSON never deletes or drops data. Instead, it isn&#39;t supported or understood by a document. If a feature becomes discontinued, or is migrated from a legacy system, we can choose to ignore this, while retaining the data.</p>
+					<p>This data is stored as unknown annotations, which are an annotation that stores all the annotation information in the attributes hash. When serialized to JSON, they look like the original annotation, but when rendering they are ignored.</p>
+					<pre><code class="language-json">{
+  <span class="hljs-attr">"type"</span>: <span class="hljs-string">"-html-marquee"</span>,
+  <span class="hljs-attr">"start"</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">"left"</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">"attributes"</span>: {
+    <span class="hljs-attr">"-html-style"</span>: <span class="hljs-string">"rainbow"</span>
+  }
+}</code></pre>
+					<p>Turns into:</p>
+					<pre><code class="language-typescript"><span class="hljs-keyword">new</span> UnknownAnnotation({
+  start: <span class="hljs-number">0</span>,
+  end: <span class="hljs-number">10</span>,
+  attributes: {
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'-html-marquee'</span>,
+    attributes: {
+      <span class="hljs-string">'-html-style'</span>: <span class="hljs-string">'rainbow'</span>
+    }
+  }
+})</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_atjson_document.adjacentboundarybehaviour.html" class="tsd-kind-icon">Adjacent<wbr>Boundary<wbr>Behaviour</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.annotation.html" class="tsd-kind-icon">Annotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.annotationcollection.html" class="tsd-kind-icon">Annotation<wbr>Collection</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.blockannotation.html" class="tsd-kind-icon">Block<wbr>Annotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.change.html" class="tsd-kind-icon">Change</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.collection.html" class="tsd-kind-icon">Collection</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.deletion.html" class="tsd-kind-icon">Deletion</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.document.html" class="tsd-kind-icon">Document</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.inlineannotation.html" class="tsd-kind-icon">Inline<wbr>Annotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.insertion.html" class="tsd-kind-icon">Insertion</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_document.join.html" class="tsd-kind-icon">Join</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_document.namedcollection.html" class="tsd-kind-icon">Named<wbr>Collection</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.objectannotation.html" class="tsd-kind-icon">Object<wbr>Annotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.parseannotation.html" class="tsd-kind-icon">Parse<wbr>Annotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_document.unknownannotation.html" class="tsd-kind-icon">Unknown<wbr>Annotation</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.annotationconstructor.html" class="tsd-kind-icon">Annotation<wbr>Constructor</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.annotationjson.html" class="tsd-kind-icon">AnnotationJSON</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/_atjson_document.dictionary.html" class="tsd-kind-icon">Dictionary</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.flattenedrenaming.html" class="tsd-kind-icon">Flattened<wbr>Renaming</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.jsonarray.html" class="tsd-kind-icon">JSONArray</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.jsonobject.html" class="tsd-kind-icon">JSONObject</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_document.renaming.html" class="tsd-kind-icon">Renaming</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="_atjson_document.html#concreteannotation" class="tsd-kind-icon">Concrete<wbr>Annotation</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_atjson_document.html#json" class="tsd-kind-icon">JSON</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_atjson_document.html#clone" class="tsd-kind-icon">clone</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_atjson_document.html#flattenpropertypaths" class="tsd-kind-icon">flatten<wbr>Property<wbr>Paths</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_atjson_document.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_atjson_document.html#matches" class="tsd-kind-icon">matches</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_atjson_document.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_atjson_document.html#tojson" class="tsd-kind-icon">toJSON</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_atjson_document.html#unprefix" class="tsd-kind-icon">unprefix</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_atjson_document.html#without" class="tsd-kind-icon">without</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="concreteannotation" class="tsd-anchor"></a>
+					<h3>Concrete<wbr>Annotation</h3>
+					<div class="tsd-signature tsd-kind-icon">Concrete<wbr>Annotation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/annotation.ts#L7">document/src/annotation.ts:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="json" class="tsd-anchor"></a>
+					<h3>JSON</h3>
+					<div class="tsd-signature tsd-kind-icon">JSON<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_atjson_document.jsonobject.html" class="tsd-signature-type">JSONObject</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_atjson_document.jsonarray.html" class="tsd-signature-type">JSONArray</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/json.ts#L5">document/src/json.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span>attribute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/attributes.ts#L58">document/src/attributes.ts:58</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>attribute: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="flattenpropertypaths" class="tsd-anchor"></a>
+					<h3>flatten<wbr>Property<wbr>Paths</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">flatten<wbr>Property<wbr>Paths<span class="tsd-signature-symbol">(</span>mapping<span class="tsd-signature-symbol">: </span><a href="../interfaces/_atjson_document.renaming.html" class="tsd-signature-type">Renaming</a>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_atjson_document.flattenedrenaming.html" class="tsd-signature-type">FlattenedRenaming</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/collection.ts#L109">document/src/collection.ts:109</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mapping: <a href="../interfaces/_atjson_document.renaming.html" class="tsd-signature-type">Renaming</a></h5>
+								</li>
+								<li>
+									<h5>options: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> values<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> prefix: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_atjson_document.flattenedrenaming.html" class="tsd-signature-type">FlattenedRenaming</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="get" class="tsd-anchor"></a>
+					<h3>get</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/collection.ts#L141">document/src/collection.ts:141</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="matches" class="tsd-anchor"></a>
+					<h3>matches</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">matches<span class="tsd-signature-symbol">(</span>annotation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/collection.ts#L4">document/src/collection.ts:4</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>annotation: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>filter: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="set" class="tsd-anchor"></a>
+					<h3>set</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/collection.ts#L151">document/src/collection.ts:151</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="tojson" class="tsd-anchor"></a>
+					<h3>toJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span>vendorPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, attribute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/attributes.ts#L31">document/src/attributes.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>vendorPrefix: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>attribute: <span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="unprefix" class="tsd-anchor"></a>
+					<h3>unprefix</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">unprefix<span class="tsd-signature-symbol">(</span>vendorPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, subdocuments<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, attribute<span class="tsd-signature-symbol">: </span><a href="_atjson_document.html#json" class="tsd-signature-type">JSON</a>, path<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/attributes.ts#L4">document/src/attributes.ts:4</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>vendorPrefix: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>subdocuments: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../classes/_atjson_document.document.html" class="tsd-signature-type">Document</a></h5>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>attribute: <a href="_atjson_document.html#json" class="tsd-signature-type">JSON</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> path: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NonNullable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="without" class="tsd-anchor"></a>
+					<h3>without</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">without<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/document/src/collection.ts#L128">document/src/collection.ts:128</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>attributes: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="_atjson_document.html">@atjson/document</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_hir.html">@atjson/hir</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_offset_annotations.html">@atjson/offset-<wbr>annotations</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_offset_core_components.html">@atjson/offset-<wbr>core-<wbr>components</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_commonmark.html">@atjson/renderer-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_graphviz.html">@atjson/renderer-<wbr>graphviz</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_hir.html">@atjson/renderer-<wbr>hir</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_plain_text.html">@atjson/renderer-<wbr>plain-<wbr>text</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_react.html">@atjson/renderer-<wbr>react</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_webcomponent.html">@atjson/renderer-<wbr>webcomponent</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_commonmark.html">@atjson/source-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_gdocs_paste.html">@atjson/source-<wbr>gdocs-<wbr>paste</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_html.html">@atjson/source-<wbr>html</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_mobiledoc.html">@atjson/source-<wbr>mobiledoc</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_prism.html">@atjson/source-<wbr>prism</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_url.html">@atjson/source-<wbr>url</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/_atjson_document.adjacentboundarybehaviour.html" class="tsd-kind-icon">Adjacent<wbr>Boundary<wbr>Behaviour</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.annotation.html" class="tsd-kind-icon">Annotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.annotationcollection.html" class="tsd-kind-icon">Annotation<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.blockannotation.html" class="tsd-kind-icon">Block<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.change.html" class="tsd-kind-icon">Change</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.deletion.html" class="tsd-kind-icon">Deletion</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.document.html" class="tsd-kind-icon">Document</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.inlineannotation.html" class="tsd-kind-icon">Inline<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.insertion.html" class="tsd-kind-icon">Insertion</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/_atjson_document.join.html" class="tsd-kind-icon">Join</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/_atjson_document.namedcollection.html" class="tsd-kind-icon">Named<wbr>Collection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.objectannotation.html" class="tsd-kind-icon">Object<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.parseannotation.html" class="tsd-kind-icon">Parse<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_document.unknownannotation.html" class="tsd-kind-icon">Unknown<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.annotationconstructor.html" class="tsd-kind-icon">Annotation<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.annotationjson.html" class="tsd-kind-icon">AnnotationJSON</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/_atjson_document.dictionary.html" class="tsd-kind-icon">Dictionary</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.flattenedrenaming.html" class="tsd-kind-icon">Flattened<wbr>Renaming</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.jsonarray.html" class="tsd-kind-icon">JSONArray</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.jsonobject.html" class="tsd-kind-icon">JSONObject</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_document.renaming.html" class="tsd-kind-icon">Renaming</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_atjson_document.html#concreteannotation" class="tsd-kind-icon">Concrete<wbr>Annotation</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="_atjson_document.html#json" class="tsd-kind-icon">JSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_atjson_document.html#clone" class="tsd-kind-icon">clone</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_atjson_document.html#flattenpropertypaths" class="tsd-kind-icon">flatten<wbr>Property<wbr>Paths</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_atjson_document.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_atjson_document.html#matches" class="tsd-kind-icon">matches</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_atjson_document.html#set" class="tsd-kind-icon">set</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_atjson_document.html#tojson" class="tsd-kind-icon">toJSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_atjson_document.html#unprefix" class="tsd-kind-icon">unprefix</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_atjson_document.html#without" class="tsd-kind-icon">without</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

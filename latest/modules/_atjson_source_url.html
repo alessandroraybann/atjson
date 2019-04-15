@@ -1,0 +1,330 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@atjson/source-url | @atjson</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@atjson</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="_atjson_source_url.html">@atjson/source-url</a>
+				</li>
+			</ul>
+			<h1>Module @atjson/source-url</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<h1 id="-atjson-source-url">🛸 @atjson/source-url</h1>
+					<p>This source transforms URLs into annotations. It allows Offset to auto-unfurl URLs into annotations, most commonly used for social media embeds and videos.</p>
+					<h2 id="-how-to-use">🖍 How to use</h2>
+					<p>To give add this new capability to your text editor, first up, you&#39;ll need to install the source into your project:</p>
+					<pre><code class="language-bash">npm install --save @atjson/<span class="hljs-built_in">source</span>-url</code></pre>
+					<p>After installing the source, next up is adding this source to the text editor&#39;s paste handler. Each text editor is different, so please look up the hooks that your editor uses to take advantage!</p>
+					<p>For this example, we&#39;ll show how to integrate this feature with <a href="https://ckeditor.com">CKEditor</a>.</p>
+					<p>A rough outline of what would be necessary to turn a pasted URL into a rich embed requires the following bits:</p>
+					<ol>
+						<li>The URL source</li>
+						<li>A renderer to export the AtJSON document into a format understood by the editor</li>
+						<li>A bit of glue to turn the pasted text into the rich version of that text.</li>
+					</ol>
+					<summary>
+						The block of code (hidden) below gives a rough outline of how to organize and put together the necessary code to get paste working for CKEditor.
+						<details>
+							<pre><code class="language-js"><span class="hljs-keyword">import</span> URLSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-url'</span>;
+<span class="hljs-keyword">import</span> Renderer <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-hir'</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CKEditorRenderer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Renderer</span> </span>{
+  *<span class="hljs-string">'facebook-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'giphy-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'iframe-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'instagram-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'pinterest-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'twitter-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'youtube-embed'</span>(embed) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;oembed&gt;<span class="hljs-subst">${embed.attributes.url}</span>&lt;/oembed&gt;`</span>;
+  }
+  *<span class="hljs-string">'root'</span>() {
+    <span class="hljs-keyword">let</span> chunks = <span class="hljs-keyword">yield</span>;
+    <span class="hljs-keyword">return</span> chunks.join(<span class="hljs-string">''</span>);
+  }
+}
+
+editor.on(<span class="hljs-string">'paste'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) </span>{
+  <span class="hljs-keyword">let</span> richPaste = <span class="hljs-keyword">new</span> URLSource(evt.data.dataValue);
+  <span class="hljs-keyword">let</span> renderer = <span class="hljs-keyword">new</span> CKEditorRenderer();
+  evt.data.dataValue = renderer.render(richPaste.toCommonSchema());
+});</code></pre>
+						</details>
+					</summary>
+					<h2 id="-supported-embeds">💁‍♀️ Supported embeds</h2>
+					<ul>
+						<li>Instagram</li>
+						<li>Twitter</li>
+						<li>Pinterest</li>
+						<li>Youtube</li>
+						<li>Giphy</li>
+						<li>Facebook</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_url.urlannotation.html" class="tsd-kind-icon">URLAnnotation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_url.urlsource.html" class="tsd-kind-icon">URLSource</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="_atjson_source_url.html#without" class="tsd-kind-icon">without</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+					<a name="without" class="tsd-anchor"></a>
+					<h3>without</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">without&lt;T&gt;<span class="tsd-signature-symbol">(</span>array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CondeNast-Copilot/atjson/blob/bdbf8bb/packages/@atjson/source-url/src/converter.ts#L5">source-url/src/converter.ts:5</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>array: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_document.html">@atjson/document</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_hir.html">@atjson/hir</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_offset_annotations.html">@atjson/offset-<wbr>annotations</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_offset_core_components.html">@atjson/offset-<wbr>core-<wbr>components</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_commonmark.html">@atjson/renderer-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_graphviz.html">@atjson/renderer-<wbr>graphviz</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_hir.html">@atjson/renderer-<wbr>hir</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_plain_text.html">@atjson/renderer-<wbr>plain-<wbr>text</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_react.html">@atjson/renderer-<wbr>react</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_renderer_webcomponent.html">@atjson/renderer-<wbr>webcomponent</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_commonmark.html">@atjson/source-<wbr>commonmark</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_gdocs_paste.html">@atjson/source-<wbr>gdocs-<wbr>paste</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_html.html">@atjson/source-<wbr>html</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_mobiledoc.html">@atjson/source-<wbr>mobiledoc</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_atjson_source_prism.html">@atjson/source-<wbr>prism</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="_atjson_source_url.html">@atjson/source-<wbr>url</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_url.urlannotation.html" class="tsd-kind-icon">URLAnnotation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_url.urlsource.html" class="tsd-kind-icon">URLSource</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="_atjson_source_url.html#without" class="tsd-kind-icon">without</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
