@@ -64,7 +64,7 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="atjson-build-status-license-maintainability-test-coverage">AtJSON <a href="https://travis-ci.org/CondeNast/atjson"><img src="https://travis-ci.org/CondeNast-Copilot/atjson.svg?branch=latest" alt="Build Status"></a> <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a> <a href="https://codeclimate.com/github/CondeNast/atjson/maintainability"><img src="https://api.codeclimate.com/v1/badges/4ee3591f9171333e235e/maintainability" alt="Maintainability"></a> <a href="https://codeclimate.com/github/CondeNast/atjson/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4ee3591f9171333e235e/test_coverage" alt="Test Coverage"></a></h1>
+				<h1 id="atjson-build-status-license-maintainability-test-coverage">AtJSON <a href="https://travis-ci.org/CondeNast/atjson"><img src="https://travis-ci.org/CondeNast/atjson.svg?branch=latest" alt="Build Status"></a> <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a> <a href="https://codeclimate.com/github/CondeNast/atjson/maintainability"><img src="https://api.codeclimate.com/v1/badges/4ee3591f9171333e235e/maintainability" alt="Maintainability"></a> <a href="https://codeclimate.com/github/CondeNast/atjson/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4ee3591f9171333e235e/test_coverage" alt="Test Coverage"></a></h1>
 				<h2 id="maintainers">Maintainers</h2>
 				<ul>
 					<li>Tim Evans (@tim-evans <a href="mailto:tim_evans@condenast.com">tim_evans@condenast.com</a>)</li>
@@ -221,7 +221,7 @@
 }</code></pre>
 				<h3 id="how-does-a-document-get-rendered-">How does a document get rendered?</h3>
 				<p>We have a source document with annotations:</p>
-				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/war-and-peace.png" alt="War and Peace"></p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast/atjson/latest/public/war-and-peace.png" alt="War and Peace"></p>
 				<p>This marked up document equates to:</p>
 				<pre><code>War <span class="hljs-keyword">and</span> Peace
 Part First
@@ -273,7 +273,7 @@ A <span class="hljs-built_in">number</span> <span class="hljs-keyword">of</span>
   <span class="hljs-attr">end</span>: <span class="hljs-number">1323</span>
 }]</code></pre>
 				<p>This visually would look like:</p>
-				<p><img src="https://raw.githubusercontent.com/CondeNast-Copilot/atjson/latest/public/war-and-peace-annotated.png" alt="War and Peace"></p>
+				<p><img src="https://raw.githubusercontent.com/CondeNast/atjson/latest/public/war-and-peace-annotated.png" alt="War and Peace"></p>
 				<p>Creating an output is pretty straightforward, and requires no knowledge about the content format. You need to know about the annotations and what attributes they may contain. Generating output based on the hierarchical representation is straightforward and minimal.</p>
 				<p>Generating an HTML document from a document is all of this code:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">import</span> Renderer, { escapeHTML } <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-hir'</span>;
