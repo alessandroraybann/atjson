@@ -68,8 +68,24 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<h1 id="-atjson-source-html">@atjson/source-html</h1>
-					<p>Create AtJSON documents from HTML sources.</p>
+					<h1 id="-atjson-source-html">🧭 @atjson/source-html</h1>
+					<p>The HTML source turns an HTML document into an annotated document, with the raw HTML source as the text, and all the tags (and attributes) as annotations.</p>
+					<p>This source can be used to parse and convert HTML pages into another form of markup, like markdown. The snippet of code to do this is:</p>
+					<pre><code class="language-ts"><span class="hljs-keyword">import</span> HTMLSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/source-html'</span>;
+<span class="hljs-keyword">import</span> CommonMarkRenderer <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/renderer-commonmark'</span>;
+<span class="hljs-keyword">import</span> OffsetSource <span class="hljs-keyword">from</span> <span class="hljs-string">'@atjson/offset-annotations'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">htmlToMarkdown</span>(<span class="hljs-params">html: <span class="hljs-built_in">string</span></span>) </span>{
+  <span class="hljs-keyword">return</span> CommonMarkRenderer.render(
+    HTMLSource.fromRaw(html).convertTo(OffsetSource)
+  );
+}</code></pre>
+					<h2 id="-insights-into-your-html">🔮 Insights into your HTML</h2>
+					<p>The HTML source is particularly useful to take HTML and be able to modernize it into a rich experience, for example. We&#39;ve taken a complex static / JS rendered webpage and turned it into a React application using atjson at Condé Nast as an example of how powerful this can be.</p>
+					<h2 id="-how-annotations-are-generated">💁‍♂️ How Annotations are generated</h2>
+					<p>We dynamically generate the HTML annotations for this package directly from the <a href="https://html.spec.whatwg.org/multipage">WHATWG HTML spec</a>. To regenerate the annotations for this source, run the script in <code>scripts/generate-annotations.js</code>:</p>
+					<pre><code class="language-bash">node ./scripts/generate-annotations.js</code></pre>
+					<p>This will regenerate all files in the annotations directory, so beware! Any manual changes can and probably will be overridden by this script in the future, as the HTML spec evolves over time.</p>
 				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -79,34 +95,126 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.anchor.html" class="tsd-kind-icon">Anchor</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.blockquote.html" class="tsd-kind-icon">Blockquote</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.bold.html" class="tsd-kind-icon">Bold</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.break.html" class="tsd-kind-icon">Break</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.code.html" class="tsd-kind-icon">Code</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.deletedtext.html" class="tsd-kind-icon">Deleted<wbr>Text</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.emphasis.html" class="tsd-kind-icon">Emphasis</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.abbreviation.html" class="tsd-kind-icon">Abbreviation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.address.html" class="tsd-kind-icon">Address</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.anchor.html" class="tsd-kind-icon">Anchor</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.area.html" class="tsd-kind-icon">Area</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.article.html" class="tsd-kind-icon">Article</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.aside.html" class="tsd-kind-icon">Aside</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.audio.html" class="tsd-kind-icon">Audio</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.base.html" class="tsd-kind-icon">Base</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.blockquote.html" class="tsd-kind-icon">Blockquote</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.body.html" class="tsd-kind-icon">Body</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.bold.html" class="tsd-kind-icon">Bold</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.button.html" class="tsd-kind-icon">Button</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.canvas.html" class="tsd-kind-icon">Canvas</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.caption.html" class="tsd-kind-icon">Caption</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.cite.html" class="tsd-kind-icon">Cite</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.code.html" class="tsd-kind-icon">Code</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.column.html" class="tsd-kind-icon">Column</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.columngroup.html" class="tsd-kind-icon">Column<wbr>Group</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.data.html" class="tsd-kind-icon">Data</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.datalist.html" class="tsd-kind-icon">Data<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.definition.html" class="tsd-kind-icon">Definition</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.delete.html" class="tsd-kind-icon">Delete</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.descriptiondefinition.html" class="tsd-kind-icon">Description<wbr>Definition</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.descriptionlist.html" class="tsd-kind-icon">Description<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.descriptionterm.html" class="tsd-kind-icon">Description<wbr>Term</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.details.html" class="tsd-kind-icon">Details</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.dialog.html" class="tsd-kind-icon">Dialog</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.div.html" class="tsd-kind-icon">Div</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.embed.html" class="tsd-kind-icon">Embed</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.emphasis.html" class="tsd-kind-icon">Emphasis</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.fieldset.html" class="tsd-kind-icon">Fieldset</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.figure.html" class="tsd-kind-icon">Figure</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.figurecaption.html" class="tsd-kind-icon">Figure<wbr>Caption</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.footer.html" class="tsd-kind-icon">Footer</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.form.html" class="tsd-kind-icon">Form</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h1.html" class="tsd-kind-icon">H1</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h2.html" class="tsd-kind-icon">H2</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h3.html" class="tsd-kind-icon">H3</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h4.html" class="tsd-kind-icon">H4</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h5.html" class="tsd-kind-icon">H5</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.h6.html" class="tsd-kind-icon">H6</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.htmlmap.html" class="tsd-kind-icon">HTMLMap</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.htmlobject.html" class="tsd-kind-icon">HTMLObject</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.htmlsource.html" class="tsd-kind-icon">HTMLSource</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading1.html" class="tsd-kind-icon">Heading1</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading2.html" class="tsd-kind-icon">Heading2</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading3.html" class="tsd-kind-icon">Heading3</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading4.html" class="tsd-kind-icon">Heading4</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading5.html" class="tsd-kind-icon">Heading5</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.heading6.html" class="tsd-kind-icon">Heading6</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.horizontalrule.html" class="tsd-kind-icon">Horizontal<wbr>Rule</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.image.html" class="tsd-kind-icon">Image</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.italic.html" class="tsd-kind-icon">Italic</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.listitem.html" class="tsd-kind-icon">List<wbr>Item</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.orderedlist.html" class="tsd-kind-icon">Ordered<wbr>List</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.paragraph.html" class="tsd-kind-icon">Paragraph</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.head.html" class="tsd-kind-icon">Head</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.header.html" class="tsd-kind-icon">Header</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.headinggroup.html" class="tsd-kind-icon">Heading<wbr>Group</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.horizontalrule.html" class="tsd-kind-icon">Horizontal<wbr>Rule</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.html.html" class="tsd-kind-icon">Html</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.iframe.html" class="tsd-kind-icon">Iframe</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.image.html" class="tsd-kind-icon">Image</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.input.html" class="tsd-kind-icon">Input</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.insert.html" class="tsd-kind-icon">Insert</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.italic.html" class="tsd-kind-icon">Italic</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.keyboard.html" class="tsd-kind-icon">Keyboard</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.label.html" class="tsd-kind-icon">Label</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.legend.html" class="tsd-kind-icon">Legend</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.linebreak.html" class="tsd-kind-icon">Line<wbr>Break</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.linebreakopportunity.html" class="tsd-kind-icon">Line<wbr>Break<wbr>Opportunity</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.link.html" class="tsd-kind-icon">Link</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.listitem.html" class="tsd-kind-icon">List<wbr>Item</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.main.html" class="tsd-kind-icon">Main</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.mark.html" class="tsd-kind-icon">Mark</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.menu.html" class="tsd-kind-icon">Menu</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.meta.html" class="tsd-kind-icon">Meta</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.meter.html" class="tsd-kind-icon">Meter</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.navigation.html" class="tsd-kind-icon">Navigation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.noscript.html" class="tsd-kind-icon">No<wbr>Script</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.option.html" class="tsd-kind-icon">Option</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.optiongroup.html" class="tsd-kind-icon">Option<wbr>Group</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.orderedlist.html" class="tsd-kind-icon">Ordered<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.output.html" class="tsd-kind-icon">Output</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.paragraph.html" class="tsd-kind-icon">Paragraph</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.param.html" class="tsd-kind-icon">Param</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.parser.html" class="tsd-kind-icon">Parser</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.preformattedtext.html" class="tsd-kind-icon">Preformatted<wbr>Text</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.strikethrough.html" class="tsd-kind-icon">Strikethrough</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.strong.html" class="tsd-kind-icon">Strong</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.subscript.html" class="tsd-kind-icon">Subscript</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.superscript.html" class="tsd-kind-icon">Superscript</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.underline.html" class="tsd-kind-icon">Underline</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_atjson_source_html.unorderedlist.html" class="tsd-kind-icon">Unordered<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.picture.html" class="tsd-kind-icon">Picture</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.preformattedtext.html" class="tsd-kind-icon">Preformatted<wbr>Text</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.progress.html" class="tsd-kind-icon">Progress</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.quote.html" class="tsd-kind-icon">Quote</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.ruby.html" class="tsd-kind-icon">Ruby</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.rubyparenthesis.html" class="tsd-kind-icon">Ruby<wbr>Parenthesis</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.rubytext.html" class="tsd-kind-icon">Ruby<wbr>Text</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.sample.html" class="tsd-kind-icon">Sample</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.script.html" class="tsd-kind-icon">Script</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.section.html" class="tsd-kind-icon">Section</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.select.html" class="tsd-kind-icon">Select</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.slot.html" class="tsd-kind-icon">Slot</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.small.html" class="tsd-kind-icon">Small</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.source.html" class="tsd-kind-icon">Source</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.span.html" class="tsd-kind-icon">Span</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.strikethrough.html" class="tsd-kind-icon">Strikethrough</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.strong.html" class="tsd-kind-icon">Strong</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.style.html" class="tsd-kind-icon">Style</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.subscript.html" class="tsd-kind-icon">Subscript</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.summary.html" class="tsd-kind-icon">Summary</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.superscript.html" class="tsd-kind-icon">Superscript</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.table.html" class="tsd-kind-icon">Table</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tablebody.html" class="tsd-kind-icon">Table<wbr>Body</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tabledata.html" class="tsd-kind-icon">Table<wbr>Data</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tablefooter.html" class="tsd-kind-icon">Table<wbr>Footer</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tableheader.html" class="tsd-kind-icon">Table<wbr>Header</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tableheading.html" class="tsd-kind-icon">Table<wbr>Heading</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.tablerow.html" class="tsd-kind-icon">Table<wbr>Row</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.template.html" class="tsd-kind-icon">Template</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.textdirectionisolation.html" class="tsd-kind-icon">Text<wbr>Direction<wbr>Isolation</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.textdirectionoverride.html" class="tsd-kind-icon">Text<wbr>Direction<wbr>Override</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.textarea.html" class="tsd-kind-icon">Textarea</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.time.html" class="tsd-kind-icon">Time</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.title.html" class="tsd-kind-icon">Title</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.track.html" class="tsd-kind-icon">Track</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.underline.html" class="tsd-kind-icon">Underline</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.unorderedlist.html" class="tsd-kind-icon">Unordered<wbr>List</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.variable.html" class="tsd-kind-icon">Variable</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_atjson_source_html.video.html" class="tsd-kind-icon">Video</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_atjson_source_html.globalattributes.html" class="tsd-kind-icon">Global<wbr>Attributes</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
@@ -133,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/6971422/packages/@atjson/source-html/src/parser.ts#L18">source-html/src/parser.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/4003898/packages/@atjson/source-html/src/parser.ts#L18">source-html/src/parser.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -156,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/6971422/packages/@atjson/source-html/src/parser.ts#L4">source-html/src/parser.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/4003898/packages/@atjson/source-html/src/parser.ts#L4">source-html/src/parser.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -179,7 +287,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/6971422/packages/@atjson/source-html/src/parser.ts#L10">source-html/src/parser.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/4003898/packages/@atjson/source-html/src/parser.ts#L10">source-html/src/parser.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,7 +310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/6971422/packages/@atjson/source-html/src/parser.ts#L14">source-html/src/parser.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/CondeNast/atjson/blob/4003898/packages/@atjson/source-html/src/parser.ts#L14">source-html/src/parser.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -275,89 +383,350 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.abbreviation.html" class="tsd-kind-icon">Abbreviation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.address.html" class="tsd-kind-icon">Address</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.anchor.html" class="tsd-kind-icon">Anchor</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.area.html" class="tsd-kind-icon">Area</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.article.html" class="tsd-kind-icon">Article</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.aside.html" class="tsd-kind-icon">Aside</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.audio.html" class="tsd-kind-icon">Audio</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.base.html" class="tsd-kind-icon">Base</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.blockquote.html" class="tsd-kind-icon">Blockquote</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.body.html" class="tsd-kind-icon">Body</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.bold.html" class="tsd-kind-icon">Bold</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.break.html" class="tsd-kind-icon">Break</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.button.html" class="tsd-kind-icon">Button</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.canvas.html" class="tsd-kind-icon">Canvas</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.caption.html" class="tsd-kind-icon">Caption</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.cite.html" class="tsd-kind-icon">Cite</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.code.html" class="tsd-kind-icon">Code</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.deletedtext.html" class="tsd-kind-icon">Deleted<wbr>Text</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.column.html" class="tsd-kind-icon">Column</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.columngroup.html" class="tsd-kind-icon">Column<wbr>Group</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.data.html" class="tsd-kind-icon">Data</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.datalist.html" class="tsd-kind-icon">Data<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.definition.html" class="tsd-kind-icon">Definition</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.delete.html" class="tsd-kind-icon">Delete</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.descriptiondefinition.html" class="tsd-kind-icon">Description<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.descriptionlist.html" class="tsd-kind-icon">Description<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.descriptionterm.html" class="tsd-kind-icon">Description<wbr>Term</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.details.html" class="tsd-kind-icon">Details</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.dialog.html" class="tsd-kind-icon">Dialog</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.div.html" class="tsd-kind-icon">Div</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.embed.html" class="tsd-kind-icon">Embed</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.emphasis.html" class="tsd-kind-icon">Emphasis</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.fieldset.html" class="tsd-kind-icon">Fieldset</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.figure.html" class="tsd-kind-icon">Figure</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.figurecaption.html" class="tsd-kind-icon">Figure<wbr>Caption</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.footer.html" class="tsd-kind-icon">Footer</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.form.html" class="tsd-kind-icon">Form</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h1.html" class="tsd-kind-icon">H1</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h2.html" class="tsd-kind-icon">H2</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h3.html" class="tsd-kind-icon">H3</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h4.html" class="tsd-kind-icon">H4</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h5.html" class="tsd-kind-icon">H5</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.h6.html" class="tsd-kind-icon">H6</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.htmlmap.html" class="tsd-kind-icon">HTMLMap</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.htmlobject.html" class="tsd-kind-icon">HTMLObject</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.htmlsource.html" class="tsd-kind-icon">HTMLSource</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading1.html" class="tsd-kind-icon">Heading1</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.head.html" class="tsd-kind-icon">Head</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading2.html" class="tsd-kind-icon">Heading2</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.header.html" class="tsd-kind-icon">Header</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading3.html" class="tsd-kind-icon">Heading3</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.headinggroup.html" class="tsd-kind-icon">Heading<wbr>Group</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading4.html" class="tsd-kind-icon">Heading4</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading5.html" class="tsd-kind-icon">Heading5</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_atjson_source_html.heading6.html" class="tsd-kind-icon">Heading6</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.horizontalrule.html" class="tsd-kind-icon">Horizontal<wbr>Rule</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.html.html" class="tsd-kind-icon">Html</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.iframe.html" class="tsd-kind-icon">Iframe</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.image.html" class="tsd-kind-icon">Image</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.input.html" class="tsd-kind-icon">Input</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.insert.html" class="tsd-kind-icon">Insert</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.italic.html" class="tsd-kind-icon">Italic</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.keyboard.html" class="tsd-kind-icon">Keyboard</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.label.html" class="tsd-kind-icon">Label</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.legend.html" class="tsd-kind-icon">Legend</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.linebreak.html" class="tsd-kind-icon">Line<wbr>Break</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.linebreakopportunity.html" class="tsd-kind-icon">Line<wbr>Break<wbr>Opportunity</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.link.html" class="tsd-kind-icon">Link</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.listitem.html" class="tsd-kind-icon">List<wbr>Item</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.main.html" class="tsd-kind-icon">Main</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.mark.html" class="tsd-kind-icon">Mark</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.menu.html" class="tsd-kind-icon">Menu</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.meta.html" class="tsd-kind-icon">Meta</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.meter.html" class="tsd-kind-icon">Meter</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.navigation.html" class="tsd-kind-icon">Navigation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.noscript.html" class="tsd-kind-icon">No<wbr>Script</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.option.html" class="tsd-kind-icon">Option</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.optiongroup.html" class="tsd-kind-icon">Option<wbr>Group</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.orderedlist.html" class="tsd-kind-icon">Ordered<wbr>List</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.output.html" class="tsd-kind-icon">Output</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.paragraph.html" class="tsd-kind-icon">Paragraph</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.param.html" class="tsd-kind-icon">Param</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.parser.html" class="tsd-kind-icon">Parser</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.picture.html" class="tsd-kind-icon">Picture</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.preformattedtext.html" class="tsd-kind-icon">Preformatted<wbr>Text</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.progress.html" class="tsd-kind-icon">Progress</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.quote.html" class="tsd-kind-icon">Quote</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.ruby.html" class="tsd-kind-icon">Ruby</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.rubyparenthesis.html" class="tsd-kind-icon">Ruby<wbr>Parenthesis</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.rubytext.html" class="tsd-kind-icon">Ruby<wbr>Text</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.sample.html" class="tsd-kind-icon">Sample</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.script.html" class="tsd-kind-icon">Script</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.section.html" class="tsd-kind-icon">Section</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.select.html" class="tsd-kind-icon">Select</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.slot.html" class="tsd-kind-icon">Slot</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.small.html" class="tsd-kind-icon">Small</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.source.html" class="tsd-kind-icon">Source</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.span.html" class="tsd-kind-icon">Span</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.strikethrough.html" class="tsd-kind-icon">Strikethrough</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.strong.html" class="tsd-kind-icon">Strong</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.style.html" class="tsd-kind-icon">Style</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.subscript.html" class="tsd-kind-icon">Subscript</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.summary.html" class="tsd-kind-icon">Summary</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.superscript.html" class="tsd-kind-icon">Superscript</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.table.html" class="tsd-kind-icon">Table</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tablebody.html" class="tsd-kind-icon">Table<wbr>Body</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tabledata.html" class="tsd-kind-icon">Table<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tablefooter.html" class="tsd-kind-icon">Table<wbr>Footer</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tableheader.html" class="tsd-kind-icon">Table<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tableheading.html" class="tsd-kind-icon">Table<wbr>Heading</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.tablerow.html" class="tsd-kind-icon">Table<wbr>Row</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.template.html" class="tsd-kind-icon">Template</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.textdirectionisolation.html" class="tsd-kind-icon">Text<wbr>Direction<wbr>Isolation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.textdirectionoverride.html" class="tsd-kind-icon">Text<wbr>Direction<wbr>Override</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.textarea.html" class="tsd-kind-icon">Textarea</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.time.html" class="tsd-kind-icon">Time</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.title.html" class="tsd-kind-icon">Title</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.track.html" class="tsd-kind-icon">Track</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.underline.html" class="tsd-kind-icon">Underline</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_atjson_source_html.unorderedlist.html" class="tsd-kind-icon">Unordered<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.variable.html" class="tsd-kind-icon">Variable</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_atjson_source_html.video.html" class="tsd-kind-icon">Video</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_atjson_source_html.globalattributes.html" class="tsd-kind-icon">Global<wbr>Attributes</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_atjson_source_html.html#getattributes" class="tsd-kind-icon">get<wbr>Attributes</a>
