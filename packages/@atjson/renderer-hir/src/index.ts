@@ -10,7 +10,7 @@ const escape: Mapping = {
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;',
-  '\'': '&#x27;',
+  "'": '&#x27;',
   '`': '&#x60;',
   '=': '&#x3D;'
 };
@@ -37,23 +37,31 @@ function flatten(array: any[]): any[] {
 // This classify is _specifically_ for our annotation types—
 // casing is ignored, and dashes are the only thing allowed.
 export function classify(type: string) {
-  return type.toLowerCase().split('-').map(word => {
-    if (word.length > 0) {
-      return word[0].toUpperCase() + word.slice(1);
-    }
-    return '';
-  }).join('');
+  return type
+    .toLowerCase()
+    .split('-')
+    .map(word => {
+      if (word.length > 0) {
+        return word[0].toUpperCase() + word.slice(1);
+      }
+      return '';
+    })
+    .join('');
 }
 
 export interface Context {
   parent: Annotation<any>;
-  previous: Annotation<any> | (AnnotationJSON & { toJSON(): object; }) | null;
-  next: Annotation<any> | (AnnotationJSON & { toJSON(): object; }) | null;
+  previous: Annotation<any> | (AnnotationJSON & { toJSON(): object }) | null;
+  next: Annotation<any> | (AnnotationJSON & { toJSON(): object }) | null;
   children: Array<Annotation<any>>;
   document: Document;
 }
 
-function compile(renderer: Renderer, node: HIRNode, context: Partial<Context>): any {
+function compile(
+  renderer: Renderer,
+  node: HIRNode,
+  context: Partial<Context>
+): any {
   let annotation = node.annotation;
   let childNodes = node.children();
   let childAnnotations = childNodes.map(childNode => {
@@ -97,28 +105,34 @@ function compile(renderer: Renderer, node: HIRNode, context: Partial<Context>): 
     return result.value;
   }
 
-  return generator.next(flatten(childNodes.map((childNode: HIRNode, idx: number) => {
-    let childContext = {
-      parent: annotation! || null,
-      previous: childAnnotations[idx - 1] || null,
-      next: childAnnotations[idx + 1] || null,
-      document: context.document!
-    };
+  return generator.next(
+    flatten(
+      childNodes.map((childNode: HIRNode, idx: number) => {
+        let childContext = {
+          parent: annotation! || null,
+          previous: childAnnotations[idx - 1] || null,
+          next: childAnnotations[idx + 1] || null,
+          document: context.document!
+        };
 
-    if (childNode.type === 'text') {
-      return renderer.text(childNode.text, {
-        ...childContext,
-        children: []
-      });
-    } else {
-      return compile(renderer, childNode, childContext);
-    }
-  }))).value;
+        if (childNode.type === 'text') {
+          return renderer.text(childNode.text, {
+            ...childContext,
+            children: []
+          });
+        } else {
+          return compile(renderer, childNode, childContext);
+        }
+      })
+    )
+  ).value;
 }
 
 export default class Renderer {
-
-  static render<T extends typeof Renderer>(this: T, ...params: ConstructorParameters<T>) {
+  static render<T extends typeof Renderer>(
+    this: T,
+    ...params: ConstructorParameters<T>
+  ) {
     let document = params[0];
     let renderer = new this(document, ...params.slice(1));
 
@@ -128,8 +142,13 @@ export default class Renderer {
   // tslint:disable-next-line:no-empty
   constructor(_document: Document, ..._args: any[]) {}
 
-  *renderAnnotation(annotation: Annotation<any>, context: Context): IterableIterator<any> {
-    let generator = (this as any)[annotation.type] || (this as any)[classify(annotation.type)];
+  *renderAnnotation(
+    annotation: Annotation<any>,
+    context: Context
+  ): IterableIterator<any> {
+    let generator =
+      (this as any)[annotation.type] ||
+      (this as any)[classify(annotation.type)];
     if (generator) {
       return yield* generator.call(this, annotation, context);
     }

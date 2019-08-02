@@ -1,7 +1,8 @@
 import WebComponent from '../../src/mixins/component';
 
 export default class AnnotationAttribute extends WebComponent {
-  static template = '<div class="attribute"><span class="name"></span>: "<span class="value"></span>"</div>';
+  static template =
+    '<div class="attribute"><span class="name"></span>: "<span class="value"></span>"</div>';
 
   static style = `
     .attribute {
@@ -24,10 +25,14 @@ export default class AnnotationAttribute extends WebComponent {
   attributeChangedCallback(attribute) {
     switch (attribute) {
       case 'name':
-        this.shadowRoot.querySelector('.name').innerHTML = this.getAttribute('name');
+        this.shadowRoot.querySelector('.name').innerHTML = this.getAttribute(
+          'name'
+        );
         break;
       case 'value':
-        this.shadowRoot.querySelector('.value').innerHTML = this.getAttribute('value');
+        this.shadowRoot.querySelector('.value').innerHTML = this.getAttribute(
+          'value'
+        );
         break;
     }
   }

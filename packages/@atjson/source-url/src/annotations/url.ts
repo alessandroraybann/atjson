@@ -10,6 +10,6 @@ export default class URLAnnotation extends ObjectAnnotation {
     protocol: string;
     searchParams: {
       [key: string]: string;
-    }
+    };
   };
 }

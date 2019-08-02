@@ -26,29 +26,34 @@ function without<T>(array: T[], value: T): T[] {
 
 const Giphy: FC<AttributesOf<GiphyEmbed>> = props => {
   let url = new URL(props.url);
-  let giphyId = without<string>(url.pathname.split('/'), '')[1].split('-').slice(-1)[0];
+  let giphyId = without<string>(url.pathname.split('/'), '')[1]
+    .split('-')
+    .slice(-1)[0];
   return (
     <picture>
-      <source type='webp' src={`https://media.giphy.com/media/${giphyId}/giphy.webp`} />
+      <source
+        type="webp"
+        src={`https://media.giphy.com/media/${giphyId}/giphy.webp`}
+      />
       <img src={`https://media.giphy.com/media/${giphyId}/giphy.gif`} />
     </picture>
   );
 };
 
 export const URLPaste: FC = () => {
-  let [url, setURL] = useState('https://giphy.com/gifs/cover-yorker-7kQgG9mngOlJS');
+  let [url, setURL] = useState(
+    'https://giphy.com/gifs/cover-yorker-7kQgG9mngOlJS'
+  );
   return (
     <Wrapper>
       <TextField
-        type='url'
+        type="url"
         value={url}
         onChange={evt => setURL(evt.target.value)}
       />
-      {
-        Renderer.render(URLSource.fromRaw(url).convertTo(OffsetSource), {
-          GiphyEmbed: Giphy
-        })
-      }
+      {Renderer.render(URLSource.fromRaw(url).convertTo(OffsetSource), {
+        GiphyEmbed: Giphy
+      })}
     </Wrapper>
   );
 };

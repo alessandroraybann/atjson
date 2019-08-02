@@ -13,11 +13,15 @@ export interface GDocsPasteBuffer {
 }
 
 export interface Transforms {
-  [key: string]: (styles: GDocsStyleSlice[], entityMap: GDocsEntityMap, trailing?: GDocsStyleSlice, text?: string) => AnnotationJSON[];
+  [key: string]: (
+    styles: GDocsStyleSlice[],
+    entityMap: GDocsEntityMap,
+    trailing?: GDocsStyleSlice,
+    text?: string
+  ) => AnnotationJSON[];
 }
 
 export default class GDocsParser {
-
   static transforms: Transforms = {
     text: extractTextStyles,
     paragraph: extractParagraphStyles,
@@ -52,6 +56,8 @@ export default class GDocsParser {
       return null;
     });
 
-    return [].concat.apply([], annotations).filter((a: AnnotationJSON | null) => a != null);
+    return [].concat
+      .apply([], annotations)
+      .filter((a: AnnotationJSON | null) => a != null);
   }
 }

@@ -26,9 +26,6 @@
       "google-docs-explainer",
       "url-paste"
     ],
-    "Applications": [
-      "analysis",
-      "machine-learning"
-    ]
+    "Applications": ["analysis", "machine-learning"]
   }
 }

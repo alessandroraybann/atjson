@@ -20,23 +20,28 @@ describe('whitespace', () => {
       expect(hir.toJSON()).toMatchObject({
         type: 'root',
         attributes: {},
-        children: [{
-          type: 'paragraph',
-          attributes: {},
-          children: ['1']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['\u202F']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['\u00A0']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['2']
-        }]
+        children: [
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['1']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['\u202F']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['\u00A0']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['2']
+          }
+        ]
       });
     });
 
@@ -46,23 +51,28 @@ describe('whitespace', () => {
       expect(hir.toJSON()).toMatchObject({
         type: 'root',
         attributes: {},
-        children: [{
-          type: 'paragraph',
-          attributes: {},
-          children: ['1']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['\u202F']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['\u202F']
-        }, {
-          type: 'paragraph',
-          attributes: {},
-          children: ['2']
-        }]
+        children: [
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['1']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['\u202F']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['\u202F']
+          },
+          {
+            type: 'paragraph',
+            attributes: {},
+            children: ['2']
+          }
+        ]
       });
     });
   });
@@ -84,36 +94,43 @@ describe('list', () => {
   test('tight', () => {
     let tight = CommonMarkSource.fromRaw('- 1\n   - 2\n      - 3');
     let list = tight.where({ type: '-commonmark-bullet_list' });
-    expect(list.map(a => a.toJSON())).toMatchObject([{
-      type: '-commonmark-bullet_list',
-      attributes: {
-        '-commonmark-tight': true
+    expect(list.map(a => a.toJSON())).toMatchObject([
+      {
+        type: '-commonmark-bullet_list',
+        attributes: {
+          '-commonmark-tight': true
+        }
+      },
+      {
+        type: '-commonmark-bullet_list',
+        attributes: {
+          '-commonmark-tight': true
+        }
+      },
+      {
+        type: '-commonmark-bullet_list',
+        attributes: {
+          '-commonmark-tight': true
+        }
       }
-    }, {
-      type: '-commonmark-bullet_list',
-      attributes: {
-        '-commonmark-tight': true
-      }
-    }, {
-      type: '-commonmark-bullet_list',
-      attributes: {
-        '-commonmark-tight': true
-      }
-    }]);
+    ]);
 
     let loose = CommonMarkSource.fromRaw('1. 1\n\n   2. 2\n   3. 3');
     list = loose.where({ type: '-commonmark-ordered_list' });
-    expect(list.map(a => a.toJSON())).toMatchObject([{
-      type: '-commonmark-ordered_list',
-      attributes: {
-        '-commonmark-start': 2,
-        '-commonmark-tight': true
+    expect(list.map(a => a.toJSON())).toMatchObject([
+      {
+        type: '-commonmark-ordered_list',
+        attributes: {
+          '-commonmark-start': 2,
+          '-commonmark-tight': true
+        }
+      },
+      {
+        type: '-commonmark-ordered_list',
+        attributes: {
+          '-commonmark-tight': false
+        }
       }
-    }, {
-      type: '-commonmark-ordered_list',
-      attributes: {
-        '-commonmark-tight': false
-      }
-    }]);
+    ]);
   });
 });

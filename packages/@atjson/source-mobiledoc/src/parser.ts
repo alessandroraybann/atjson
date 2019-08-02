@@ -20,10 +20,13 @@ function prefix(attributes: any): any {
   if (Array.isArray(attributes)) {
     return attributes.map((item: any) => prefix(item));
   } else if (typeof attributes === 'object' && attributes != null) {
-    return Object.keys(attributes).reduce((prefixedAttributes: any, key: string) => {
-      prefixedAttributes[`-mobiledoc-${key}`] = prefix(attributes[key]);
-      return prefixedAttributes;
-    }, {} as any);
+    return Object.keys(attributes).reduce(
+      (prefixedAttributes: any, key: string) => {
+        prefixedAttributes[`-mobiledoc-${key}`] = prefix(attributes[key]);
+        return prefixedAttributes;
+      },
+      {} as any
+    );
   } else {
     return attributes;
   }
@@ -94,9 +97,17 @@ export default class Parser {
     markers.forEach(([identifier, tags, closed, textOrAtomIndex]) => {
       let partial = '';
       if (identifier === 0) {
-        partial = this.processMarkup(tags, closed, textOrAtomIndex as string, offset);
+        partial = this.processMarkup(
+          tags,
+          closed,
+          textOrAtomIndex as string,
+          offset
+        );
       } else if (identifier === 1) {
-        partial = this.processAtom(this.mobiledoc.atoms[textOrAtomIndex as number], offset);
+        partial = this.processAtom(
+          this.mobiledoc.atoms[textOrAtomIndex as number],
+          offset
+        );
       }
       sectionText += partial;
       offset += partial.length;
@@ -124,9 +135,17 @@ export default class Parser {
       markers.forEach(([identifier, tags, closed, textOrAtomIndex]) => {
         let partial = '';
         if (identifier === 0) {
-          partial = this.processMarkup(tags, closed, textOrAtomIndex as string, offset);
+          partial = this.processMarkup(
+            tags,
+            closed,
+            textOrAtomIndex as string,
+            offset
+          );
         } else if (identifier === 1) {
-          partial = this.processAtom(this.mobiledoc.atoms[textOrAtomIndex as number], offset);
+          partial = this.processAtom(
+            this.mobiledoc.atoms[textOrAtomIndex as number],
+            offset
+          );
         }
         item += partial;
         offset += partial.length;
@@ -151,7 +170,12 @@ export default class Parser {
     return listText;
   }
 
-  processMarkup(markupIndexes: number[], numberOfClosedMarkups: number, text: string, start: number) {
+  processMarkup(
+    markupIndexes: number[],
+    numberOfClosedMarkups: number,
+    text: string,
+    start: number
+  ) {
     let end = start + text.length;
 
     while (markupIndexes.length) {

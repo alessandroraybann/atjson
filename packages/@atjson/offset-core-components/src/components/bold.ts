@@ -1,5 +1,4 @@
 export default class OffsetBoldElement {
-
   static annotationName = 'bold';
 
   static elementRenderer(): Element {

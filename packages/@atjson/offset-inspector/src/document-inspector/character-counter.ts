@@ -59,8 +59,10 @@ export default class CharacterCounter extends WebComponent {
       caret.classList.add('caret');
       caret.textContent = '\u200B';
       highlight.appendChild(caret);
-    }  else {
-      let contentHighlight = document.createTextNode(rawContent.substr(start, end - start));
+    } else {
+      let contentHighlight = document.createTextNode(
+        rawContent.substr(start, end - start)
+      );
       highlight.classList.add('highlight');
       highlight.appendChild(contentHighlight);
     }
@@ -69,7 +71,8 @@ export default class CharacterCounter extends WebComponent {
     content.appendChild(highlight);
     content.appendChild(contentEnd);
 
-    if (contentSpan.children[0]) contentSpan.removeChild(contentSpan.children[0]);
+    if (contentSpan.children[0])
+      contentSpan.removeChild(contentSpan.children[0]);
     contentSpan.appendChild(content);
   }
 

@@ -1,4 +1,3 @@
-
 import { BlockAnnotation } from '@atjson/document';
 
 export default class List extends BlockAnnotation<{

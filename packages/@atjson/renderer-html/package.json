@@ -16,9 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@atjson/offset-annotations": "file:../offset-annotations",
     "@atjson/renderer-hir": "file:../renderer-hir"
-  },
-  "devDependencies": {
-    "@atjson/offset-annotations": "file:../offset-annotations"
   }
 }

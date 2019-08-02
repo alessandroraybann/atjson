@@ -1,5 +1,18 @@
-import Document, { Annotation, ParseAnnotation, UnknownAnnotation } from '@atjson/document';
-import { Bold, Code, HTML, Heading, Image, Italic, Link, List } from '@atjson/offset-annotations';
+import Document, {
+  Annotation,
+  ParseAnnotation,
+  UnknownAnnotation
+} from '@atjson/document';
+import {
+  Bold,
+  Code,
+  Heading,
+  HTML,
+  Image,
+  Italic,
+  Link,
+  List
+} from '@atjson/offset-annotations';
 import Renderer, { Context } from '@atjson/renderer-hir';
 import {
   BEGINNING_WHITESPACE,
@@ -14,7 +27,9 @@ function getPreviousChar(doc: Document, end: number) {
   let start = end;
 
   while (start > 0) {
-    let parseAnnotations = doc.where(a => a instanceof ParseAnnotation && a.end >= start && a.start < start);
+    let parseAnnotations = doc.where(
+      a => a instanceof ParseAnnotation && a.end >= start && a.start < start
+    );
     if (parseAnnotations.length) {
       start = Math.min(...parseAnnotations.annotations.map(a => a.start));
     } else {
@@ -23,8 +38,13 @@ function getPreviousChar(doc: Document, end: number) {
   }
 
   let wrappingAnnotations = doc
-    .where(a => !(a instanceof ParseAnnotation || a instanceof UnknownAnnotation))
-    .where(a => (a.start >= start && a.start < end) || (a.end >= start && a.end <= end));
+    .where(
+      a => !(a instanceof ParseAnnotation || a instanceof UnknownAnnotation)
+    )
+    .where(
+      a =>
+        (a.start >= start && a.start < end) || (a.end >= start && a.end <= end)
+    );
 
   if (wrappingAnnotations.length) {
     return '';
@@ -37,7 +57,9 @@ function getNextChar(doc: Document, start: number) {
   let end = start;
 
   while (end < doc.content.length) {
-    let parseAnnotations = doc.where(a => a instanceof ParseAnnotation && a.start <= end && a.end > end);
+    let parseAnnotations = doc.where(
+      a => a instanceof ParseAnnotation && a.start <= end && a.end > end
+    );
     if (parseAnnotations.length) {
       end = Math.max(...parseAnnotations.annotations.map(a => a.end));
     } else {
@@ -46,8 +68,13 @@ function getNextChar(doc: Document, start: number) {
   }
 
   let wrappingAnnotations = doc
-    .where(a => !(a instanceof ParseAnnotation || a instanceof UnknownAnnotation))
-    .where(a => (a.start >= start && a.start <= end) || (a.end > start && a.end <= end));
+    .where(
+      a => !(a instanceof ParseAnnotation || a instanceof UnknownAnnotation)
+    )
+    .where(
+      a =>
+        (a.start >= start && a.start <= end) || (a.end > start && a.end <= end)
+    );
 
   if (wrappingAnnotations.length) {
     return '';
@@ -87,9 +114,12 @@ export function* splitDelimiterRuns(
     if (match[2]) {
       end -= match[2].length;
     } else if (match[3]) {
-
       let nextChar = getNextChar(context.document, annotation.end);
-      if (end === text.length && nextChar && !nextChar.match(WHITESPACE_PUNCTUATION)) {
+      if (
+        end === text.length &&
+        nextChar &&
+        !nextChar.match(WHITESPACE_PUNCTUATION)
+      ) {
         end -= match[3].length;
       } else {
         break;
@@ -98,17 +128,13 @@ export function* splitDelimiterRuns(
   }
 
   if (options.escapeHtmlEntities) {
-    return [
-      text.slice(0, start),
-      text.slice(start, end),
-      text.slice(end)
-    ].map(escapeHtmlEntities);
+    return [text.slice(0, start), text.slice(start, end), text.slice(end)].map(
+      escapeHtmlEntities
+    );
   } else {
-    return [
-      text.slice(0, start),
-      text.slice(start, end),
-      text.slice(end)
-    ].map(escapeEntities);
+    return [text.slice(0, start), text.slice(start, end), text.slice(end)].map(
+      escapeEntities
+    );
   }
 }
 
@@ -130,11 +156,7 @@ export function* split(): Iterable<any> {
     end -= match[1].length;
   }
 
-  return [
-    text.slice(0, start),
-    text.slice(start, end),
-    text.slice(end)
-  ];
+  return [text.slice(0, start), text.slice(start, end), text.slice(end)];
 }
 
 // http://spec.commonmark.org/0.28/#backslash-escapes
@@ -142,13 +164,14 @@ function escapePunctuation(
   text: string,
   options: { escapeHtmlEntities: boolean } = { escapeHtmlEntities: true }
 ) {
-  let escaped = text.replace(/([#!*+=\\\^_`{|}~])/g, '\\$1')
-                    .replace(/(\[)([^\]]*$)/g, '\\$1$2')          // Escape bare opening brackets [
-                    .replace(/(^[^\[]*)(\].*$)/g, '$1\\$2')       // Escape bare closing brackets ]
-                    .replace(/(\]\()/g, ']\\(')                   // Escape parenthesis ](
-                    .replace(/^(\s*\d+)\.(\s+)/gm, '$1\\.$2')     // Escape list items; not all numbers
-                    .replace(/(^[\s]*)-/g, '$1\\-')               // `  - list item`
-                    .replace(/(\r\n|\r|\n)([\s]*)-/g, '$1$2\\-'); // `- list item\n - list item`
+  let escaped = text
+    .replace(/([#!*+=\\\^_`{|}~])/g, '\\$1')
+    .replace(/(\[)([^\]]*$)/g, '\\$1$2') // Escape bare opening brackets [
+    .replace(/(^[^\[]*)(\].*$)/g, '$1\\$2') // Escape bare closing brackets ]
+    .replace(/(\]\()/g, ']\\(') // Escape parenthesis ](
+    .replace(/^(\s*\d+)\.(\s+)/gm, '$1\\.$2') // Escape list items; not all numbers
+    .replace(/(^[\s]*)-/g, '$1\\-') // `  - list item`
+    .replace(/(\r\n|\r|\n)([\s]*)-/g, '$1$2\\-'); // `- list item\n - list item`
 
   if (options.escapeHtmlEntities) {
     return escapeHtmlEntities(escaped);
@@ -158,28 +181,30 @@ function escapePunctuation(
 }
 
 function escapeHtmlEntities(text: string) {
-  return text.replace(/&amp;/g, '&amp;amp;')
-             .replace(/&lt;/g, '&amp;lt;')
-             .replace(/&nbsp;/g, '&amp;nbsp;')
-             .replace(/</g, '&lt;')
-             .replace(/\u00A0/gu, '&nbsp;');
+  return text
+    .replace(/&amp;/g, '&amp;amp;')
+    .replace(/&lt;/g, '&amp;lt;')
+    .replace(/&nbsp;/g, '&amp;nbsp;')
+    .replace(/</g, '&lt;')
+    .replace(/\u00A0/gu, '&nbsp;');
 }
 
 function escapeEntities(text: string) {
-  return text.replace(/&amp;/g, '&amp;amp;')
-             .replace(/&nbsp;/g, '&amp;nbsp;')
-             .replace(/\u00A0/gu, '&nbsp;');
+  return text
+    .replace(/&amp;/g, '&amp;amp;')
+    .replace(/&nbsp;/g, '&amp;nbsp;')
+    .replace(/\u00A0/gu, '&nbsp;');
 }
 
 function unescapeEntities(text: string) {
-  return text.replace(/&amp;/ig, '&')
-             .replace(/&lt;/ig, '<')
-             .replace(/&nbsp;/ig, '\u00A0');
+  return text
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&nbsp;/gi, '\u00A0');
 }
 
 function escapeAttribute(text: string) {
-  return text.replace(/\(/g, '\\(')
-             .replace(/\)/g, '\\)');
+  return text.replace(/\(/g, '\\(').replace(/\)/g, '\\)');
 }
 
 function getNumberOfRequiredBackticks(text: string) {
@@ -203,7 +228,6 @@ function getNumberOfRequiredBackticks(text: string) {
 }
 
 export default class CommonmarkRenderer extends Renderer {
-
   /**
    * Controls whether HTML entities should be escaped. This
    * may be desireable if markdown is being generated for humans
@@ -251,11 +275,19 @@ export default class CommonmarkRenderer extends Renderer {
    * words; underscores cannot split words.
    */
   *Bold(bold: Bold, context: Context): Iterable<any> {
-    let [before, text, after] = yield* splitDelimiterRuns(bold, context, this.options);
+    let [before, text, after] = yield* splitDelimiterRuns(
+      bold,
+      context,
+      this.options
+    );
     if (text.length === 0) {
       return before + after;
     } else {
-      if (!context.previous && !context.next && context.parent instanceof Italic) {
+      if (
+        !context.previous &&
+        !context.next &&
+        context.parent instanceof Italic
+      ) {
         return `${before}__${text}__${after}`;
       }
       return `${before}**${text}**${after}`;
@@ -274,10 +306,19 @@ export default class CommonmarkRenderer extends Renderer {
     let endOfQuote = lines.length;
     let startOfQuote = 0;
 
-    while (startOfQuote < endOfQuote - 1 && lines[startOfQuote].match(/^\s*$/)) startOfQuote++;
-    while (endOfQuote > startOfQuote + 1 && lines[endOfQuote - 1].match(/^\s*$/)) endOfQuote--;
+    while (startOfQuote < endOfQuote - 1 && lines[startOfQuote].match(/^\s*$/))
+      startOfQuote++;
+    while (
+      endOfQuote > startOfQuote + 1 &&
+      lines[endOfQuote - 1].match(/^\s*$/)
+    )
+      endOfQuote--;
 
-    let quote = lines.slice(startOfQuote, endOfQuote).map(line => `> ${line}`).join('\n') + '\n';
+    let quote =
+      lines
+        .slice(startOfQuote, endOfQuote)
+        .map(line => `> ${line}`)
+        .join('\n') + '\n';
 
     if (!this.state.tight) {
       quote += '\n';
@@ -327,9 +368,15 @@ export default class CommonmarkRenderer extends Renderer {
     let AltTextRenderer = this.constructor as typeof CommonmarkRenderer;
     if (image.attributes.title) {
       let title = image.attributes.title.replace(/"/g, '\\"');
-      return `![${AltTextRenderer.render(image.attributes.description, this.options)}](${image.attributes.url} "${title}")`;
+      return `![${AltTextRenderer.render(
+        image.attributes.description,
+        this.options
+      )}](${image.attributes.url} "${title}")`;
     }
-    return `![${AltTextRenderer.render(image.attributes.description, this.options)}](${image.attributes.url})`;
+    return `![${AltTextRenderer.render(
+      image.attributes.description,
+      this.options
+    )}](${image.attributes.url})`;
   }
 
   /**
@@ -338,19 +385,25 @@ export default class CommonmarkRenderer extends Renderer {
   *Italic(italic: Italic, context: Context): Iterable<any> {
     // This adds support for strong emphasis (per Commonmark)
     // Strong emphasis includes _*two*_ emphasis markers around text.
-    let state = Object.assign({}, this.state);
+    let state = { ...this.state };
     this.state.isItalicized = true;
 
-    let [before, text, after] = yield* splitDelimiterRuns(italic, context, this.options);
+    let [before, text, after] = yield* splitDelimiterRuns(
+      italic,
+      context,
+      this.options
+    );
     this.state = state;
 
     if (text.length === 0) {
       return before + after;
     } else {
       let markup = state.isItalicized ? '_' : '*';
-      let hasWrappingBoldMarkup = !context.previous && !context.next && context.parent instanceof Bold;
-      let hasAdjacentBoldMarkup = (context.next instanceof Bold && after.length === 0) ||
-                                  (context.previous instanceof Bold && before.length === 0);
+      let hasWrappingBoldMarkup =
+        !context.previous && !context.next && context.parent instanceof Bold;
+      let hasAdjacentBoldMarkup =
+        (context.next instanceof Bold && after.length === 0) ||
+        (context.previous instanceof Bold && before.length === 0);
       if (hasWrappingBoldMarkup || hasAdjacentBoldMarkup) {
         markup = '_';
       }
@@ -387,7 +440,7 @@ export default class CommonmarkRenderer extends Renderer {
    * ```
    */
   *Code(code: Code, context: Context): Iterable<any> {
-    let state = Object.assign({}, this.state);
+    let state = { ...this.state };
     Object.assign(this.state, { isPreformatted: true, htmlSafe: true });
 
     let rawText = yield;
@@ -408,15 +461,20 @@ export default class CommonmarkRenderer extends Renderer {
         return `\`\`\`${info}${text}\`\`\`${newlines}`;
       }
     } else if (code.attributes.style === 'block') {
-      return text.split('\n').map((line: string) => `    ${line}`).join('\n') + '\n';
+      return (
+        text
+          .split('\n')
+          .map((line: string) => `    ${line}`)
+          .join('\n') + '\n'
+      );
     } else {
       // MarkdownIt strips all leading and trailing whitespace from code blocks,
       // which means that we get an empty string for a single whitespace (` `).
       if (text.length === 0) {
         return '` `';
 
-      // We need to properly escape backticks inside of code blocks
-      // by using variable numbers of backticks.
+        // We need to properly escape backticks inside of code blocks
+        // by using variable numbers of backticks.
       } else {
         let backticks = '`'.repeat(getNumberOfRequiredBackticks(text));
         return `${backticks}${text}${backticks}`;
@@ -425,7 +483,7 @@ export default class CommonmarkRenderer extends Renderer {
   }
 
   *Html(html: HTML): Iterable<any> {
-    let state = Object.assign({}, this.state);
+    let state = { ...this.state };
     Object.assign(this.state, { isPreformatted: true, htmlSafe: true });
 
     let rawText = yield;
@@ -462,7 +520,14 @@ export default class CommonmarkRenderer extends Renderer {
     lines.unshift((lines.shift() || '').replace(/^[ ]+/, ''));
     let [first, ...rest] = lines;
 
-    item = ' '.repeat(firstCharacter) + first + '\n' + rest.map(line => indent + line).join('\n').replace(/[ ]+$/, '');
+    item =
+      ' '.repeat(firstCharacter) +
+      first +
+      '\n' +
+      rest
+        .map(line => indent + line)
+        .join('\n')
+        .replace(/[ ]+$/, '');
 
     if (this.state.tight) {
       item = item.replace(/([ \n])+$/, '\n');
@@ -496,27 +561,31 @@ export default class CommonmarkRenderer extends Renderer {
     if (list.attributes.type === 'numbered') {
       delimiter = '.';
 
-      if (context.previous instanceof List &&
-          context.previous.attributes.type === 'numbered' &&
-          context.previous.attributes.delimiter === '.') {
+      if (
+        context.previous instanceof List &&
+        context.previous.attributes.type === 'numbered' &&
+        context.previous.attributes.delimiter === '.'
+      ) {
         delimiter = ')';
       }
     } else if (list.attributes.type === 'bulleted') {
       delimiter = '-';
 
-      if (context.previous instanceof List &&
-          context.previous.attributes.type === 'bulleted' &&
-          context.previous.attributes.delimiter === '-') {
+      if (
+        context.previous instanceof List &&
+        context.previous.attributes.type === 'bulleted' &&
+        context.previous.attributes.delimiter === '-'
+      ) {
         delimiter = '+';
       }
     }
     list.attributes.delimiter = delimiter;
 
-    let state = Object.assign({}, this.state);
+    let state = { ...this.state };
 
     // Handle indendation for code blocks that immediately follow a list.
-    let hasCodeBlockFollowing = context.next instanceof Code &&
-                                context.next.attributes.style === 'block';
+    let hasCodeBlockFollowing =
+      context.next instanceof Code && context.next.attributes.style === 'block';
     Object.assign(this.state, {
       isList: true,
       type: list.attributes.type,

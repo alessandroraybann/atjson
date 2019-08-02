@@ -35,9 +35,7 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} Condé Nast`
     }
   },
-  plugins: [
-    join(__dirname, 'plugins', 'docusaurus-typescript-loader'),
-  ],
+  plugins: [join(__dirname, 'plugins', 'docusaurus-typescript-loader')],
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -45,7 +43,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.json')
         }
-      },
-    ],
-  ],
+      }
+    ]
+  ]
 };

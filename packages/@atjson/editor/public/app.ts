@@ -12,7 +12,6 @@ if (module.hot) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
   let editor: OffsetEditor = document.querySelector('offset-editor');
 
   let doc = new URL(location.toString()).searchParams.get('document');
@@ -23,7 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       content: 'Some text that is both bold and italic plus something after.',
       annotations: [
         { type: 'bold', display: 'inline', start: 23, end: 31 },
-        { type: 'link', display: 'inline', start: 20, end: 24, attributes: { url: 'https://google.com' } },
+        {
+          type: 'link',
+          display: 'inline',
+          start: 20,
+          end: 24,
+          attributes: { url: 'https://google.com' }
+        },
         { type: 'italic', display: 'inline', start: 28, end: 38 },
         { type: 'underline', display: 'inline', start: 28, end: 38 },
         { type: 'paragraph', display: 'block', start: 0, end: 61 }

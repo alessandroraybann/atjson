@@ -14,7 +14,7 @@ describe('@atjson/source-gdocs-paste', () => {
       pasteBuffer = JSON.parse(fs.readFileSync(fixturePath).toString());
     });
 
-    it('has some json', () =>  {
+    it('has some json', () => {
       expect(pasteBuffer).toHaveProperty('resolved');
     });
 
@@ -66,7 +66,6 @@ describe('@atjson/source-gdocs-paste', () => {
 
       expect(gdocs.content.substring(a3.start, a3.end)).toEqual('Subtitle');
       expect(a3.attributes.level).toEqual(101);
-
     });
 
     describe('lists', () => {
@@ -77,7 +76,9 @@ describe('@atjson/source-gdocs-paste', () => {
 
         let [a0] = [...annotations];
 
-        expect(gdocs.content.substring(a0.start, a0.end)).toEqual('Here’s a numbered list\nAnd another item');
+        expect(gdocs.content.substring(a0.start, a0.end)).toEqual(
+          'Here’s a numbered list\nAnd another item'
+        );
         expect(a0.attributes.ls_id).toEqual('kix.trdi2u6o1bvt');
       });
 
@@ -88,11 +89,15 @@ describe('@atjson/source-gdocs-paste', () => {
 
         let [a0, a1] = [...annotations];
 
-        expect(gdocs.content.substring(a0.start, a0.end)).toEqual('Here’s a numbered list');
+        expect(gdocs.content.substring(a0.start, a0.end)).toEqual(
+          'Here’s a numbered list'
+        );
         expect(a0.attributes.ls_id).toEqual('kix.trdi2u6o1bvt');
         expect(a0.attributes.ls_nest).toEqual(0);
 
-        expect(gdocs.content.substring(a1.start, a1.end)).toEqual('And another item');
+        expect(gdocs.content.substring(a1.start, a1.end)).toEqual(
+          'And another item'
+        );
         expect(a1.attributes.ls_id).toEqual('kix.trdi2u6o1bvt');
         expect(a1.attributes.ls_nest).toEqual(0);
       });
@@ -116,7 +121,11 @@ describe('@atjson/source-gdocs-paste', () => {
 
     beforeAll(() => {
       // https://docs.google.com/document/d/18pp4dAGx5II596HHGOLUXXcc6VKLAVRBUMLm9Ge8eOE/edit?usp=sharing
-      let fixturePath = path.join(__dirname, 'fixtures', 'formats-and-tabs.json');
+      let fixturePath = path.join(
+        __dirname,
+        'fixtures',
+        'formats-and-tabs.json'
+      );
       gdocsBuffer = JSON.parse(fs.readFileSync(fixturePath).toString());
     });
 
@@ -149,7 +158,9 @@ describe('@atjson/source-gdocs-paste', () => {
       expect(annotations.length).toEqual(1);
 
       let [italic] = annotations;
-      expect(gdocs.content.substring(italic.start, italic.end)).toEqual('italic');
+      expect(gdocs.content.substring(italic.start, italic.end)).toEqual(
+        'italic'
+      );
     });
 
     it('extracts underline', () => {
@@ -158,7 +169,9 @@ describe('@atjson/source-gdocs-paste', () => {
       expect(annotations.length).toEqual(1);
 
       let [underline] = annotations;
-      expect(gdocs.content.substring(underline.start, underline.end)).toEqual('underlined');
+      expect(gdocs.content.substring(underline.start, underline.end)).toEqual(
+        'underlined'
+      );
     });
 
     it('extracts horizontal rules', () => {
@@ -176,7 +189,9 @@ describe('@atjson/source-gdocs-paste', () => {
       expect(annotations.length).toEqual(1);
 
       let [strikethrough] = annotations;
-      expect(gdocs.content.substring(strikethrough.start, strikethrough.end)).toEqual('strikethrough');
+      expect(
+        gdocs.content.substring(strikethrough.start, strikethrough.end)
+      ).toEqual('strikethrough');
     });
 
     it('extracts vertical adjust', () => {
@@ -184,10 +199,18 @@ describe('@atjson/source-gdocs-paste', () => {
       let annotations = gdocs.where(a => a instanceof VerticalAdjust);
       expect(annotations.length).toEqual(2);
 
-      let [superscript] = annotations.where(annotation => annotation.attributes.va === 'sup');
-      let [subscript] = annotations.where(annotation => annotation.attributes.va === 'sub');
-      expect(gdocs.content.substring(superscript.start, superscript.end)).toEqual('TM');
-      expect(gdocs.content.substring(subscript.start, subscript.end)).toEqual('2');
+      let [superscript] = annotations.where(
+        annotation => annotation.attributes.va === 'sup'
+      );
+      let [subscript] = annotations.where(
+        annotation => annotation.attributes.va === 'sub'
+      );
+      expect(
+        gdocs.content.substring(superscript.start, superscript.end)
+      ).toEqual('TM');
+      expect(gdocs.content.substring(subscript.start, subscript.end)).toEqual(
+        '2'
+      );
     });
   });
 
@@ -251,13 +274,19 @@ describe('@atjson/source-gdocs-paste', () => {
 
     beforeAll(() => {
       // https://docs.google.com/document/d/1PKNoasDTf0Pj71vJs4MAi9zOrWDA3TDSNj0RFXWoCp4/edit
-      let fixturePath = path.join(__dirname, 'fixtures', 'list-styles-partial.json');
+      let fixturePath = path.join(
+        __dirname,
+        'fixtures',
+        'list-styles-partial.json'
+      );
       pasteBuffer = JSON.parse(fs.readFileSync(fixturePath).toString());
     });
 
     it('creates the right number of list and list-item annotations', () => {
       let gdocs = GDocsSource.fromRaw(pasteBuffer);
-      let listAndItems = gdocs.where(a => a.type === 'list').as('list')
+      let listAndItems = gdocs
+        .where(a => a.type === 'list')
+        .as('list')
         .join(
           gdocs.where(a => a.type === 'list_item').as('listItems'),
           (l, r) => l.start <= r.start && l.end >= r.end
@@ -270,17 +299,17 @@ describe('@atjson/source-gdocs-paste', () => {
             { start: 0, end: 8, type: '-gdocs-list_item' },
             { start: 9, end: 22, type: '-gdocs-list_item' }
           ]
-        }, {
+        },
+        {
           list: { start: 41, end: 68, type: '-gdocs-list' },
           listItems: [
             { start: 41, end: 54, type: '-gdocs-list_item' },
             { start: 55, end: 68, type: '-gdocs-list_item' }
           ]
-        }, {
+        },
+        {
           list: { start: 89, end: 102, type: '-gdocs-list' },
-          listItems: [
-            { start: 89, end: 102, type: '-gdocs-list_item' }
-          ]
+          listItems: [{ start: 89, end: 102, type: '-gdocs-list_item' }]
         }
       ]);
     });

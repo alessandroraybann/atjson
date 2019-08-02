@@ -1,28 +1,49 @@
 import Document, { AnnotationJSON } from './index';
 import JSON, { JSONObject } from './json';
 
-export function unprefix(vendorPrefix: string, subdocuments: { [key: string]: typeof Document }, attribute: JSON, path: Array<string | number> = []): NonNullable<any> {
+export function unprefix(
+  vendorPrefix: string,
+  subdocuments: { [key: string]: typeof Document },
+  attribute: JSON,
+  path: Array<string | number> = []
+): NonNullable<any> {
   if (Array.isArray(attribute)) {
     return attribute.map((attr, index) => {
-      let result = unprefix(vendorPrefix, subdocuments, attr, path.concat(index));
+      let result = unprefix(
+        vendorPrefix,
+        subdocuments,
+        attr,
+        path.concat(index)
+      );
       return result;
     });
   } else if (subdocuments[path.join('.')]) {
-    let serializedDocument = (attribute as any) as { content: string; annotations: AnnotationJSON[] };
+    let serializedDocument = (attribute as any) as {
+      content: string;
+      annotations: AnnotationJSON[];
+    };
     return new subdocuments[path.join('.')](serializedDocument);
   } else if (attribute == null) {
     return null;
   } else if (typeof attribute === 'object') {
-    return Object.keys(attribute).reduce((attrs: NonNullable<any>, key: string) => {
-      let value = attribute[key];
-      if (key.indexOf(`-${vendorPrefix}-`) === 0 && value !== undefined) {
-        let unprefixedKey = key.slice(`-${vendorPrefix}-`.length);
-        attrs[unprefixedKey] = unprefix(vendorPrefix, subdocuments, value, path.concat(unprefixedKey));
-      } else {
-        attrs[key] = value;
-      }
-      return attrs;
-    }, {});
+    return Object.keys(attribute).reduce(
+      (attrs: NonNullable<any>, key: string) => {
+        let value = attribute[key];
+        if (key.indexOf(`-${vendorPrefix}-`) === 0 && value !== undefined) {
+          let unprefixedKey = key.slice(`-${vendorPrefix}-`.length);
+          attrs[unprefixedKey] = unprefix(
+            vendorPrefix,
+            subdocuments,
+            value,
+            path.concat(unprefixedKey)
+          );
+        } else {
+          attrs[key] = value;
+        }
+        return attrs;
+      },
+      {}
+    );
   } else {
     return attribute;
   }

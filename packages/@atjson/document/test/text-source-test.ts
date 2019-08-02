@@ -15,19 +15,22 @@ export class TextSource extends Document {
     let id = 1;
     while (text.indexOf('\n', start) !== -1) {
       let end = text.indexOf('\n', start);
-      annotations.push({
-        id: (id++).toString(),
-        type: '-text-paragraph',
-        start,
-        end: end + 1,
-        attributes: {}
-      }, {
-        id: (id++).toString(),
-        type: '-atjson-parse-token',
-        start: end,
-        end: end + 1,
-        attributes: {}
-      });
+      annotations.push(
+        {
+          id: (id++).toString(),
+          type: '-text-paragraph',
+          start,
+          end: end + 1,
+          attributes: {}
+        },
+        {
+          id: (id++).toString(),
+          type: '-atjson-parse-token',
+          start: end,
+          end: end + 1,
+          attributes: {}
+        }
+      );
       start = end + 1;
     }
     if (start < text.length) {
@@ -53,25 +56,29 @@ describe('TextSource', () => {
     expect(source.toJSON()).toEqual({
       content: 'Hello\nWorld',
       contentType: 'application/vnd.atjson+text',
-      annotations: [{
-        id: '1',
-        type: '-text-paragraph',
-        start: 0,
-        end: 6,
-        attributes: {}
-      }, {
-        id: '2',
-        type: '-atjson-parse-token',
-        start: 5,
-        end: 6,
-        attributes: {}
-      }, {
-        id: '3',
-        type: '-text-paragraph',
-        start: 6,
-        end: 11,
-        attributes: {}
-      }],
+      annotations: [
+        {
+          id: '1',
+          type: '-text-paragraph',
+          start: 0,
+          end: 6,
+          attributes: {}
+        },
+        {
+          id: '2',
+          type: '-atjson-parse-token',
+          start: 5,
+          end: 6,
+          attributes: {}
+        },
+        {
+          id: '3',
+          type: '-text-paragraph',
+          start: 6,
+          end: 11,
+          attributes: {}
+        }
+      ],
       schema: ['-text-paragraph']
     });
   });

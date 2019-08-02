@@ -1,14 +1,7 @@
-import {
-  Code,
-  Heading,
-  Image,
-  Link,
-  List
-} from '@atjson/offset-annotations';
+import { Code, Heading, Image, Link, List } from '@atjson/offset-annotations';
 import Renderer from '@atjson/renderer-hir';
 
 export default class HTMLRenderer extends Renderer {
-
   /**
    * Renders an HTML string from an object.
    *
@@ -19,19 +12,22 @@ export default class HTMLRenderer extends Renderer {
    * @param tagName The HTML tag name to use.
    * @param props The HTML attributes (if there are any) and whether the element is self-closing.
    */
-  *$(tagName: string, props?: { attributes?: any, selfClosing?: boolean }) {
+  *$(tagName: string, props?: { attributes?: any; selfClosing?: boolean }) {
     let attributes = props ? props.attributes || {} : {};
-    let htmlAttributes = Object.keys(attributes).reduce((results, key) => {
-      let value = attributes[key];
-      if (typeof value === 'number') {
-        results.push(`${key}=${value}`);
-      } else if (typeof value === 'boolean' && value === true) {
-        results.push(`${key}`);
-      } else if (value != null && value !== false) {
-        results.push(`${key}="${value}"`);
-      }
-      return results;
-    }, [] as string[]);
+    let htmlAttributes = Object.keys(attributes).reduce(
+      (results, key) => {
+        let value = attributes[key];
+        if (typeof value === 'number') {
+          results.push(`${key}=${value}`);
+        } else if (typeof value === 'boolean' && value === true) {
+          results.push(`${key}`);
+        } else if (value != null && value !== false) {
+          results.push(`${key}="${value}"`);
+        }
+        return results;
+      },
+      [] as string[]
+    );
     let innerHTML: string[] = yield;
 
     let selfClosing = props ? props.selfClosing : false;
@@ -44,7 +40,9 @@ export default class HTMLRenderer extends Renderer {
     }
 
     if (htmlAttributes.length) {
-      return `<${tagName} ${htmlAttributes.join(' ')}>${innerHTML.join('')}</${tagName}>`;
+      return `<${tagName} ${htmlAttributes.join(' ')}>${innerHTML.join(
+        ''
+      )}</${tagName}>`;
     }
 
     return `<${tagName}>${innerHTML.join('')}</${tagName}>`;
@@ -66,7 +64,10 @@ export default class HTMLRenderer extends Renderer {
   *Code(code: Code) {
     let codeSnippet = yield* this.$('code');
 
-    if (code.attributes.style === 'block' || code.attributes.style === 'fence') {
+    if (
+      code.attributes.style === 'block' ||
+      code.attributes.style === 'fence'
+    ) {
       return `<pre>${codeSnippet}</pre>`;
     }
     return codeSnippet;
@@ -85,8 +86,11 @@ export default class HTMLRenderer extends Renderer {
       attributes: {
         src: image.attributes.url,
         title: image.attributes.title,
-        alt: image.attributes.description ?
-          (this.constructor as typeof HTMLRenderer).render(image.attributes.description) : undefined
+        alt: image.attributes.description
+          ? (this.constructor as typeof HTMLRenderer).render(
+              image.attributes.description
+            )
+          : undefined
       },
       selfClosing: true
     });

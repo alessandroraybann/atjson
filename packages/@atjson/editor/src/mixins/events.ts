@@ -20,7 +20,9 @@ function getEventNameAndElement(element: HTMLElement, definition: string) {
   } else {
     let querySelector;
     if (element.shadowRoot) {
-      querySelector = element.shadowRoot.querySelector(selector) || element.querySelector(selector);
+      querySelector =
+        element.shadowRoot.querySelector(selector) ||
+        element.querySelector(selector);
     } else {
       querySelector = element.querySelector(selector);
     }
@@ -78,7 +80,9 @@ export default class EventComponent extends HTMLElement {
           if (eventHandler instanceof Function) {
             return eventHandler.call(this, evt);
           } else {
-            throw new Error(`😭 \`${method}\` was not defined on ${this.tagName}- did you misspell  or forget to add it?`);
+            throw new Error(
+              `😭 \`${method}\` was not defined on ${this.tagName}- did you misspell  or forget to add it?`
+            );
           }
         } else {
           return method.call(this, evt);

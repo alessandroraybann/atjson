@@ -2,9 +2,11 @@ import { AnnotationJSON, ParseAnnotation } from '@atjson/document';
 import * as parse5 from 'parse5/lib';
 
 function isElement(node: parse5.AST.Default.Node) {
-  return node.nodeName !== undefined &&
-         node.nodeName !== '#text' &&
-         node.nodeName !== '';
+  return (
+    node.nodeName !== undefined &&
+    node.nodeName !== '#text' &&
+    node.nodeName !== ''
+  );
 }
 
 function isParentNode(node: parse5.AST.Default.DocumentFragment | any) {
@@ -16,15 +18,19 @@ function isText(node: parse5.AST.Default.Node) {
 }
 
 function getAttributes(node: parse5.AST.Default.Element): NonNullable<any> {
-  let attrs: NonNullable<any> = (node.attrs || []).reduce((attributes: NonNullable<any>, attr: parse5.AST.Default.Attribute) => {
-    if (attr.name.indexOf('data-') === 0) {
-      if (attributes['-html-dataset'] == null) attributes['-html-dataset'] = {};
-      attributes['-html-dataset'][attr.name.slice(5)] = attr.value;
-    } else {
-      attributes[`-html-${attr.name}`] = attr.value;
-    }
-    return attributes;
-  }, {});
+  let attrs: NonNullable<any> = (node.attrs || []).reduce(
+    (attributes: NonNullable<any>, attr: parse5.AST.Default.Attribute) => {
+      if (attr.name.indexOf('data-') === 0) {
+        if (attributes['-html-dataset'] == null)
+          attributes['-html-dataset'] = {};
+        attributes['-html-dataset'][attr.name.slice(5)] = attr.value;
+      } else {
+        attributes[`-html-${attr.name}`] = attr.value;
+      }
+      return attributes;
+    },
+    {}
+  );
 
   let href = attrs['-html-href'];
   if (node.tagName === 'a' && typeof href === 'string') {
@@ -34,7 +40,6 @@ function getAttributes(node: parse5.AST.Default.Element): NonNullable<any> {
 }
 
 export default class Parser {
-
   content: string;
 
   annotations: AnnotationJSON[];
@@ -49,7 +54,9 @@ export default class Parser {
     this.annotations = [];
     this.offset = 0;
 
-    let tree = parse5.parseFragment(html, { locationInfo: true }) as parse5.AST.Default.DocumentFragment;
+    let tree = parse5.parseFragment(html, {
+      locationInfo: true
+    }) as parse5.AST.Default.DocumentFragment;
     if (isParentNode(tree)) {
       this.walk(tree.childNodes);
     } else {
@@ -80,22 +87,30 @@ export default class Parser {
     });
   }
 
-  convertTag(node: parse5.AST.Default.Element, which: 'startTag' | 'endTag'): number {
+  convertTag(
+    node: parse5.AST.Default.Element,
+    which: 'startTag' | 'endTag'
+  ): number {
     let location = node.__location;
     if (location == null) return -1;
 
     let { startOffset: start, endOffset: end } = location[which];
-    let reason = which === 'startTag' ? `<${node.tagName}>` : `</${node.tagName}>`;
-    this.annotations.push(new ParseAnnotation({
-      attributes: { reason },
-      start: start - this.offset,
-      end: end - this.offset
-    }));
+    let reason =
+      which === 'startTag' ? `<${node.tagName}>` : `</${node.tagName}>`;
+    this.annotations.push(
+      new ParseAnnotation({
+        attributes: { reason },
+        start: start - this.offset,
+        end: end - this.offset
+      })
+    );
     this.content += this.html.slice(start, end);
     return end - this.offset;
   }
 
-  *convertNodeToAnnotation(node: parse5.AST.Default.Element): IterableIterator<void> {
+  *convertNodeToAnnotation(
+    node: parse5.AST.Default.Element
+  ): IterableIterator<void> {
     let location = node.__location;
     let tagName = node.tagName;
 
@@ -117,7 +132,6 @@ export default class Parser {
       });
 
       this.convertTag(node, 'endTag');
-
     } else if (location.startTag) {
       let start = this.convertTag(node, 'startTag');
 
@@ -129,22 +143,24 @@ export default class Parser {
         start,
         end: location.endOffset - this.offset
       });
-
     } else {
       let start = location.startOffset - this.offset;
       let end = location.endOffset - this.offset;
 
       this.content += this.html.slice(location.startOffset, location.endOffset);
-      this.annotations.push(new ParseAnnotation({
-        attributes: { reason: `<${tagName}/>` },
-        start,
-        end
-      }), {
-        type: `-html-${tagName}`,
-        attributes: getAttributes(node),
-        start,
-        end
-      });
+      this.annotations.push(
+        new ParseAnnotation({
+          attributes: { reason: `<${tagName}/>` },
+          start,
+          end
+        }),
+        {
+          type: `-html-${tagName}`,
+          attributes: getAttributes(node),
+          start,
+          end
+        }
+      );
 
       yield;
     }

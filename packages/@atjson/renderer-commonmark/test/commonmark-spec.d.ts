@@ -1,4 +1,4 @@
-declare module "commonmark-spec" {
+declare module 'commonmark-spec' {
   let tests: {
     markdown: string;
     html: string;

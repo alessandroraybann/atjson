@@ -10,7 +10,7 @@ import CommonMarkRenderer from '../src/index';
 
 const skippedTests = [
   140, // Additional newline in HTML block
-  491  // Alt text that is never used
+  491 // Alt text that is never used
 ];
 
 const unitTestsBySection: {
@@ -19,7 +19,7 @@ const unitTestsBySection: {
     html: string;
     section: string;
     number: number;
-  }>
+  }>;
 } = {};
 
 spec.tests.reduce((modules, unitTest) => {
@@ -38,7 +38,9 @@ Object.keys(unitTestsBySection).forEach(moduleName => {
       (shouldSkip ? test.skip : test)(unitTest.markdown, () => {
         let markdown = unitTest.markdown.replace(/→/g, '\t');
         let original = CommonMarkSource.fromRaw(markdown);
-        let generatedMarkdown = CommonMarkRenderer.render(original.convertTo(OffsetSource));
+        let generatedMarkdown = CommonMarkRenderer.render(
+          original.convertTo(OffsetSource)
+        );
         let output = CommonMarkSource.fromRaw(generatedMarkdown);
 
         // Assert that our internal representations (AtJSON) match

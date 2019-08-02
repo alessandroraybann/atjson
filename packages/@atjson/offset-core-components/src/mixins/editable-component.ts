@@ -1,7 +1,6 @@
 import WebComponent from './component';
 
 export default class EditableComponent extends WebComponent {
-
   static style = `
     :host {
       position: relative;

@@ -3,7 +3,6 @@ import WebComponentRenderer from '@atjson/renderer-webcomponent';
 import WebComponent from './mixins/component';
 
 export default class HTMLTreeInspector extends WebComponent {
-
   static template = '<div class="wrapper"></div>';
 
   static events = {
@@ -110,7 +109,6 @@ export default class HTMLTreeInspector extends WebComponent {
     };
 
     window.requestIdleCallback(this.deferred);
-
   }
 
   handleClick(event: MouseEvent) {
@@ -120,7 +118,8 @@ export default class HTMLTreeInspector extends WebComponent {
   }
 
   addComponent(component) {
-    WebComponentRenderer.prototype[component.annotationName] = component.elementRenderer;
+    WebComponentRenderer.prototype[component.annotationName] =
+      component.elementRenderer;
   }
 
   private renderChildren(children) {
@@ -129,7 +128,9 @@ export default class HTMLTreeInspector extends WebComponent {
       let li = document.createElement('li');
 
       if (child.nodeType === 3) {
-        let text = document.createTextNode('"' + child.textContent.replace('\n', '\\n') + '"');
+        let text = document.createTextNode(
+          '"' + child.textContent.replace('\n', '\\n') + '"'
+        );
         li.appendChild(text);
         ol.appendChild(li);
         continue;
@@ -139,7 +140,9 @@ export default class HTMLTreeInspector extends WebComponent {
       let closeTag = this.genTag(child, true);
 
       if (child.childNodes.length === 1 && child.childNodes[0].nodeType === 3) {
-        let innerText = document.createTextNode(child.childNodes[0].textContent.replace('\n', '\\n'));
+        let innerText = document.createTextNode(
+          child.childNodes[0].textContent.replace('\n', '\\n')
+        );
         li.appendChild(openTag);
         li.appendChild(innerText);
         li.appendChild(closeTag);

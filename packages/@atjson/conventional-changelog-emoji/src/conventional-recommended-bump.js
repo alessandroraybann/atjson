@@ -1,8 +1,12 @@
-"use strict";
+'use strict';
 const fs = require('fs');
 const path = require('path');
 
-let config = fs.readFileSync(path.resolve(__dirname, './emoji.csv'), 'utf-8').toString().split('\n').slice(1);
+let config = fs
+  .readFileSync(path.resolve(__dirname, './emoji.csv'), 'utf-8')
+  .toString()
+  .split('\n')
+  .slice(1);
 let featureEmojis = config.reduce((emojis, line) => {
   let [emoji, _, versionBump] = line.split(',');
   if (versionBump === 'minor') {
@@ -28,7 +32,7 @@ let revertEmojis = config.reduce((emojis, line) => {
 }, []);
 
 module.exports = {
-  whatBump: (commits) => {
+  whatBump: commits => {
     let level = 2;
     let breakings = 0;
     let features = 0;
@@ -37,7 +41,10 @@ module.exports = {
       if (commit.notes.length > 0) {
         breakings += commit.notes.length;
         level = 0;
-      } else if (commit.emojis && featureEmojis.some(emoji => commit.emojis.indexOf(emoji) !== -1)) {
+      } else if (
+        commit.emojis &&
+        featureEmojis.some(emoji => commit.emojis.indexOf(emoji) !== -1)
+      ) {
         features += 1;
         if (level === 2) {
           level = 1;
@@ -47,21 +54,28 @@ module.exports = {
 
     return {
       level: level,
-      reason: breakings === 1
-        ? `There is ${breakingChangeEmojis[0]} ${breakings} breaking change and ${featureEmojis[0]} ${features} features`
-        : `There are ${breakingChangeEmojis[0]} ${breakings} breaking changes and ${featureEmojis[0]} ${features} features`
+      reason:
+        breakings === 1
+          ? `There is ${
+              breakingChangeEmojis[0]
+            } ${breakings} breaking change and ${
+              featureEmojis[0]
+            } ${features} features`
+          : `There are ${
+              breakingChangeEmojis[0]
+            } ${breakings} breaking changes and ${
+              featureEmojis[0]
+            } ${features} features`
     };
   },
 
   parserOpts: {
     headerPattern: /^(((?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?(?:\u200d(?:[^\ud800-\udfff]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?)*)+)\s*(.*)/,
-    headerCorrespondence: [
-      "emojis",
-      "_",
-      "subject"
-    ],
+    headerCorrespondence: ['emojis', '_', 'subject'],
     noteKeywords: breakingChangeEmojis,
-    revertPattern: new RegExp(`^[${revertEmojis.join('|')}]\\s([\\s\\S]*?)\\s*Undoing PR (#\\d+)\\.*`),
-    revertCorrespondence: ["header", "hash"]
+    revertPattern: new RegExp(
+      `^[${revertEmojis.join('|')}]\\s([\\s\\S]*?)\\s*Undoing PR (#\\d+)\\.*`
+    ),
+    revertCorrespondence: ['header', 'hash']
   }
 };

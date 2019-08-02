@@ -1,20 +1,29 @@
 import WebComponent from '../src/mixins/component';
 
 export default class OffsetLogo extends WebComponent {
-
   static template = '<canvas></canvas>';
   static style = 'canvas { width: 300px; height: 150px; }';
 
   ctx: CanvasRenderingContext2D;
-  origin: { x: number, y: number };
+  origin: { x: number; y: number };
   loop?: boolean;
   channels?: any[];
 
-  initChannel(color, initialRotation, initialOffset, rotationAngleMultiplier, magicNumber) {
-    let rotationAngle = (Math.abs(Math.cos(1 * Math.PI / 180.0)) + 1) * 2 / 3;
+  initChannel(
+    color,
+    initialRotation,
+    initialOffset,
+    rotationAngleMultiplier,
+    magicNumber
+  ) {
+    let rotationAngle =
+      ((Math.abs(Math.cos((1 * Math.PI) / 180.0)) + 1) * 2) / 3;
     return {
       color,
-      point: this.rotatePoint(initialRotation, { x: this.origin.x + initialOffset.x, y: this.origin.y + initialOffset.x }),
+      point: this.rotatePoint(initialRotation, {
+        x: this.origin.x + initialOffset.x,
+        y: this.origin.y + initialOffset.x
+      }),
       angle: rotationAngle * rotationAngleMultiplier,
       dx: 0,
       dtheta: 0,
@@ -49,7 +58,7 @@ export default class OffsetLogo extends WebComponent {
   }
 
   rotatePoint(angle: number, point) {
-    let radians = angle * Math.PI / 180.0;
+    let radians = (angle * Math.PI) / 180.0;
     let cos = Math.cos(radians);
     let sin = Math.sin(radians);
     let dX = point.x - this.origin.x;
@@ -72,7 +81,7 @@ export default class OffsetLogo extends WebComponent {
       channel.dtheta += thetaSign * Math.random();
     }
 
-    if (channel.angle < 0.05 && channel.angle > 0 ) {
+    if (channel.angle < 0.05 && channel.angle > 0) {
       channel.angle = -0.05;
     } else if (channel.angle < 0 && channel.angle > -0.05) {
       channel.angle = 0.05;
@@ -95,7 +104,8 @@ export default class OffsetLogo extends WebComponent {
   }
 
   drawChannel(channel: any) {
-    let rotationAngle = (Math.abs(Math.cos(1 * Math.PI / 180.0)) + 1) * 2 / 3;
+    let rotationAngle =
+      ((Math.abs(Math.cos((1 * Math.PI) / 180.0)) + 1) * 2) / 3;
     channel.point = this.rotatePoint(rotationAngle, channel.point);
     this.drawOffset(channel.point, channel.color);
 

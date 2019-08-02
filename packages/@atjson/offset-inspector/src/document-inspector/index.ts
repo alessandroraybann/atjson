@@ -4,7 +4,6 @@ import './annotations-inspector';
 import './character-counter';
 
 export default class InspectorGadget extends WebComponent {
-
   static template = `
     <div class="heading"><div>AtJSON</div></div>
     <section class="content">
@@ -88,7 +87,7 @@ export default class InspectorGadget extends WebComponent {
 
   document: Document;
 
-  updatePosition({start, end}) {
+  updatePosition({ start, end }) {
     this.shadowRoot.querySelector('.start').textContent = start;
     this.shadowRoot.querySelector('.end').textContent = end;
 
@@ -102,13 +101,13 @@ export default class InspectorGadget extends WebComponent {
   setDocument(doc) {
     this.document = doc;
     this.shadowRoot.querySelector('annotations-inspector').setDocument(doc);
-    this.document.addEventListener('change', (() => {
+    this.document.addEventListener('change', () => {
       if (this.deferred) clearTimeout(this.deferred);
       this.deferred = setTimeout(() => {
         let charCounter = this.shadowRoot.querySelector('character-counter');
         charCounter.setAttribute('content', this.document.content);
       }, 500);
-    }));
+    });
   }
 
   setSelection(el) {

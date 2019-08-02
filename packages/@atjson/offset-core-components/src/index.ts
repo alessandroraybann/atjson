@@ -9,8 +9,15 @@ import OffsetSuperscript from './components/superscript';
 import OffsetUnderline from './components/underline';
 
 let OffsetCoreComponents = [
-  OffsetBlockquote, OffsetBold, OffsetHeading, OffsetItalic, OffsetLink,
-  OffsetParagraph, OffsetStrikethrough, OffsetSuperscript, OffsetUnderline
+  OffsetBlockquote,
+  OffsetBold,
+  OffsetHeading,
+  OffsetItalic,
+  OffsetLink,
+  OffsetParagraph,
+  OffsetStrikethrough,
+  OffsetSuperscript,
+  OffsetUnderline
 ];
 
 export default OffsetCoreComponents;

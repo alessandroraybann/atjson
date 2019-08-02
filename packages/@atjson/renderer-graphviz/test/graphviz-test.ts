@@ -30,13 +30,15 @@ describe('graphviz', () => {
   test('a simple document', () => {
     let doc = new TestSource({
       content: 'Hello, world',
-      annotations: [{
-        id: '1',
-        type: '-test-bold',
-        start: 0,
-        end: 5,
-        attributes: {}
-      }]
+      annotations: [
+        {
+          id: '1',
+          type: '-test-bold',
+          start: 0,
+          end: 5,
+          attributes: {}
+        }
+      ]
     });
     expect(GraphvizRenderer.render(doc)).toBe(`digraph atjson{
   node [shape=oval];
@@ -53,27 +55,31 @@ describe('graphviz', () => {
   test('example', () => {
     let doc = new TestSource({
       content: 'The best writing anywhere, everywhere.',
-      annotations: [{
-        id: '1',
-        type: '-test-italic',
-        start: 4,
-        end: 8,
-        attributes: {}
-      }, {
-        id: '2',
-        type: '-test-bold',
-        start: 17,
-        end: 25,
-        attributes: {}
-      }, {
-        id: '3',
-        type: '-test-link',
-        start: 0,
-        end: 38,
-        attributes: {
-          '-test-url': 'https://newyorker.com'
+      annotations: [
+        {
+          id: '1',
+          type: '-test-italic',
+          start: 4,
+          end: 8,
+          attributes: {}
+        },
+        {
+          id: '2',
+          type: '-test-bold',
+          start: 17,
+          end: 25,
+          attributes: {}
+        },
+        {
+          id: '3',
+          type: '-test-link',
+          start: 0,
+          end: 38,
+          attributes: {
+            '-test-url': 'https://newyorker.com'
+          }
         }
-      }]
+      ]
     });
 
     let result = GraphvizRenderer.render(doc, { shape: 'record' });
@@ -85,13 +91,15 @@ describe('graphviz', () => {
     test(`${shape} node shapes`, () => {
       let doc = new TestSource({
         content: 'Hello, world',
-        annotations: [{
-          id: '1',
-          type: '-test-bold',
-          start: 0,
-          end: 5,
-          attributes: {}
-        }]
+        annotations: [
+          {
+            id: '1',
+            type: '-test-bold',
+            start: 0,
+            end: 5,
+            attributes: {}
+          }
+        ]
       });
 
       expect(GraphvizRenderer.render(doc, { shape })).toBe(`digraph atjson{

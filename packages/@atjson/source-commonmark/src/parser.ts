@@ -7,10 +7,13 @@ export interface Attributes {
 }
 
 function getAttributes(token: MarkdownIt.Token): Attributes {
-  return (token.attrs || []).reduce((attributes: Attributes, attribute: string[]) => {
-    attributes[`-commonmark-${attribute[0]}`] = attribute[1];
-    return attributes;
-  }, {});
+  return (token.attrs || []).reduce(
+    (attributes: Attributes, attribute: string[]) => {
+      attributes[`-commonmark-${attribute[0]}`] = attribute[1];
+      return attributes;
+    },
+    {}
+  );
 }
 
 export interface Node {
@@ -61,7 +64,6 @@ function toTree(tokens: MarkdownIt.Token[], rootNode: Node) {
       };
       currentNode.children.push(node);
       currentNode = node;
-
     } else if (token.nesting === -1) {
       currentNode.close = token;
       if (currentNode.parent) {
@@ -86,12 +88,14 @@ function toTree(tokens: MarkdownIt.Token[], rootNode: Node) {
         open: token,
         close: token,
         parent: currentNode,
-        children: [{
-          name: 'text',
-          value: text,
-          parent: currentNode,
-          children: []
-        }]
+        children: [
+          {
+            name: 'text',
+            value: text,
+            parent: currentNode,
+            children: []
+          }
+        ]
       });
     }
   });
@@ -137,19 +141,32 @@ export default class Parser {
         } else if (node.name === 'image' && node.open) {
           let token = node.open;
           token.attrs = token.attrs || [];
-          token.attrs.push(['alt', getText(node).map(n => n.value).join('')]);
+          token.attrs.push([
+            'alt',
+            getText(node)
+              .map(n => n.value)
+              .join('')
+          ]);
           node.children = [];
         }
         let attrs: Attributes = {};
         // Identify whether the list is tight (paragraphs collapse)
-        if ((node.name === 'bullet_list' || node.name === 'ordered_list') && node.open) {
+        if (
+          (node.name === 'bullet_list' || node.name === 'ordered_list') &&
+          node.open
+        ) {
           let isTight = node.children.some(items => {
-            return items.children.filter(child => child.name === 'paragraph')
-                                 .some(child => !!(child.open && child.open.hidden));
+            return items.children
+              .filter(child => child.name === 'paragraph')
+              .some(child => !!(child.open && child.open.hidden));
           });
           attrs['-commonmark-tight'] = isTight;
         }
-        let annotationGenerator = this.convertTokenToAnnotation(node.name, node.open, attrs);
+        let annotationGenerator = this.convertTokenToAnnotation(
+          node.name,
+          node.open,
+          attrs
+        );
         annotationGenerator.next();
         this.walk(node.children);
         annotationGenerator.next();
@@ -157,16 +174,22 @@ export default class Parser {
     });
   }
 
-  *convertTokenToAnnotation(name: string, open: MarkdownIt.Token, attrs: Attributes): IterableIterator<void> {
+  *convertTokenToAnnotation(
+    name: string,
+    open: MarkdownIt.Token,
+    attrs: Attributes
+  ): IterableIterator<void> {
     let start = this.content.length;
     this.content += '\uFFFC';
-    this.annotations.push(new ParseAnnotation({
-      start,
-      end: start + 1,
-      attributes: {
-        reason: `${name}_open`
-      }
-    }));
+    this.annotations.push(
+      new ParseAnnotation({
+        start,
+        end: start + 1,
+        attributes: {
+          reason: `${name}_open`
+        }
+      })
+    );
 
     let closingToken = yield;
 
@@ -184,17 +207,20 @@ export default class Parser {
     if (this.handlers[name]) {
       Object.assign(attributes, this.handlers[name](open, closingToken));
     }
-    this.annotations.push(new ParseAnnotation({
-      start: end - 1,
-      end,
-      attributes: {
-        reason: `${name}_close`
+    this.annotations.push(
+      new ParseAnnotation({
+        start: end - 1,
+        end,
+        attributes: {
+          reason: `${name}_close`
+        }
+      }),
+      {
+        type: `-commonmark-${name}`,
+        start,
+        end,
+        attributes
       }
-    }), {
-      type: `-commonmark-${name}`,
-      start,
-      end,
-      attributes
-    });
+    );
   }
 }

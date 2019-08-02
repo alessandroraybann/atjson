@@ -1,11 +1,10 @@
 import WebComponent from '../mixins/component';
 
 export default class LinkEditor extends WebComponent {
-
   static template = `<a target="_blank">🔗</a>&nbsp;<div class="default"><input type="text" class="urlinput" /></div><div class="extended"><input type="checkbox" name="nofollow" class="nofollow" /><label for="nofollow">No&nbsp;Follow</label></div>&nbsp; <button class="config">⚙️</button><button class="cancel">❌</button><button class="save">✔️</button>&nbsp;`;
 
   static events = {
-    'beforeinput': 'beforeInput',
+    beforeinput: 'beforeInput',
     'click .cancel': 'cursorBlur',
     'click .save': 'onSave',
     'click .config': 'onConfig',
@@ -60,18 +59,22 @@ export default class LinkEditor extends WebComponent {
       this.removeAttribute('nofollow');
     }
 
-    this.dispatchEvent(new CustomEvent('attributechange', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        attributes: {
-          url: this.urlInput.value,
-          nofollow: this.nofollowInput.checked
+    this.dispatchEvent(
+      new CustomEvent('attributechange', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          attributes: {
+            url: this.urlInput.value,
+            nofollow: this.nofollowInput.checked
+          }
         }
-      }
-    }));
+      })
+    );
 
-    this.dispatchEvent(new CustomEvent('resumeinput', { bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('resumeinput', { bubbles: true, composed: true })
+    );
 
     evt.stopPropagation();
   }
@@ -89,14 +92,18 @@ export default class LinkEditor extends WebComponent {
 
   private get urlInput(): HTMLInputElement {
     if (!this.shadowRoot) throw new Error('No shadowRoot found!');
-    let input: HTMLInputElement | null = this.shadowRoot.querySelector('.urlinput');
+    let input: HTMLInputElement | null = this.shadowRoot.querySelector(
+      '.urlinput'
+    );
     if (!input) throw new Error('No URL Input Element Found!');
     return input;
   }
 
   private get nofollowInput(): HTMLInputElement {
     if (!this.shadowRoot) throw new Error('No shadowRoot found!');
-    let input: HTMLInputElement | null = this.shadowRoot.querySelector('.nofollow');
+    let input: HTMLInputElement | null = this.shadowRoot.querySelector(
+      '.nofollow'
+    );
     if (!input) throw new Error('No nofollow Input Element Found!');
     return input;
   }

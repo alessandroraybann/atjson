@@ -10,4 +10,4 @@ module.exports = async function() {
   console.log(chalk.green('Tearing down puppeteer...'));
   await global.__BROWSER__.close();
   rimraf.sync(DIR);
-}
+};

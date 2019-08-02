@@ -6,7 +6,6 @@ interface WebComponentRenderer {
 }
 
 class WebComponentRenderer {
-
   document: Document;
 
   constructor(document: Document) {
@@ -19,14 +18,21 @@ class WebComponentRenderer {
       if (nonBreakStrings[nonBreakStrings.length - 1] === '') {
         nonBreakStrings.pop();
       }
-      let children = nonBreakStrings.map((str: string) => {
-        let span = document.createElement('span');
-        span.style.whiteSpace = 'normal';
-        span.style.display = 'none';
-        span.contentEditable = 'false';
-        span.appendChild(document.createTextNode('\n'));
-        return [document.createTextNode(str), span];
-      }).reduce((a: Array<Text | HTMLSpanElement>, b: Array<Text | HTMLSpanElement>): Array<Text | HTMLSpanElement> => a.concat(b));
+      let children = nonBreakStrings
+        .map((str: string) => {
+          let span = document.createElement('span');
+          span.style.whiteSpace = 'normal';
+          span.style.display = 'none';
+          span.contentEditable = 'false';
+          span.appendChild(document.createTextNode('\n'));
+          return [document.createTextNode(str), span];
+        })
+        .reduce(
+          (
+            a: Array<Text | HTMLSpanElement>,
+            b: Array<Text | HTMLSpanElement>
+          ): Array<Text | HTMLSpanElement> => a.concat(b)
+        );
 
       let textParentNode = document.createElement('span');
       children.forEach((child: Node) => {

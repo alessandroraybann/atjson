@@ -16,6 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@atjson/document": "file:../document",
     "@atjson/renderer-hir": "file:../renderer-hir",
     "react": "^16.2.0"
   },

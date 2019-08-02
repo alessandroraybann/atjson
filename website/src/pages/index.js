@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import React from 'react';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
@@ -18,12 +11,13 @@ const highlights = null;
 /* Note that this is only temporary. TODO: better welcome screen */
 function Home() {
   const context = useDocusaurusContext();
-  const {siteConfig = {}} = context;
+  const { siteConfig = {} } = context;
   return (
     <Layout
       /** this title will overwrite the one in config */
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Description will go into a meta tag in <head />"
+    >
       <header className={classnames('hero hero--dark', styles.header)}>
         <div className="container">
           <img src={withBaseUrl('img/logo.svg')} alt="logo" />
@@ -33,9 +27,10 @@ function Home() {
             <Link
               className={classnames(
                 'button button--outline button--primary button--lg',
-                styles.getStarted,
+                styles.getStarted
               )}
-              to={withBaseUrl('docs/getting-started')}>
+              to={withBaseUrl('docs/getting-started')}
+            >
               Get Started
             </Link>
           </div>
@@ -46,10 +41,11 @@ function Home() {
           <section className={styles.highlights}>
             <div className="container">
               <div className="row">
-                {highlights.map(({imageUrl, title, description}, idx) => (
+                {highlights.map(({ imageUrl, title, description }, idx) => (
                   <div
                     key={`landing-page-highlight-${idx}`}
-                    className={classnames('col col--4', styles.highlight)}>
+                    className={classnames('col col--4', styles.highlight)}
+                  >
                     <img src={withBaseUrl(imageUrl)} alt={title} />
                     <h3>{title}</h3>
                     <p>{description}</p>

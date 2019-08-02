@@ -3,9 +3,11 @@ import { InlineAnnotation } from '@atjson/document';
 import GlobalAttributes from './global-attributes';
 
 // [§ 4.5.9 The abbr element](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-abbr-element)
-export default class Abbreviation extends InlineAnnotation<GlobalAttributes & {
-  title?: string;
-}> {
+export default class Abbreviation extends InlineAnnotation<
+  GlobalAttributes & {
+    title?: string;
+  }
+> {
   static vendorPrefix = 'html';
   static type = 'abbr';
 }

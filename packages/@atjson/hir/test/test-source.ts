@@ -1,4 +1,8 @@
-import Document, { BlockAnnotation, InlineAnnotation, ObjectAnnotation } from '@atjson/document';
+import Document, {
+  BlockAnnotation,
+  InlineAnnotation,
+  ObjectAnnotation
+} from '@atjson/document';
 
 export class Bold extends InlineAnnotation {
   static vendorPrefix = 'test';
@@ -41,7 +45,7 @@ export class Paragraph extends BlockAnnotation {
   static type = 'paragraph';
 
   get rank() {
-    return super.rank * 3 / 2;
+    return (super.rank * 3) / 2;
   }
 }
 

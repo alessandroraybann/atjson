@@ -5,6 +5,6 @@ export default class Paragraph extends BlockAnnotation {
   static vendorPrefix = 'offset';
 
   get rank() {
-    return super.rank * 3 / 2;
+    return (super.rank * 3) / 2;
   }
 }

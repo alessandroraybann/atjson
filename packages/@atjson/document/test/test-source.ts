@@ -1,4 +1,10 @@
-import Document, { AdjacentBoundaryBehaviour, Change, InlineAnnotation, Insertion, ObjectAnnotation } from '../src';
+import Document, {
+  AdjacentBoundaryBehaviour,
+  Change,
+  InlineAnnotation,
+  Insertion,
+  ObjectAnnotation
+} from '../src';
 
 export class Anchor extends InlineAnnotation<{
   href: string;
@@ -57,7 +63,7 @@ export class Preformatted extends ObjectAnnotation<{
 }
 
 export class Image extends ObjectAnnotation<{
-  caption: CaptionSource
+  caption: CaptionSource;
 }> {
   static vendorPrefix = 'test';
   static type = 'image';
@@ -84,5 +90,16 @@ export class Manual extends ObjectAnnotation {
 
 export default class TestSource extends Document {
   static contentType = 'application/vnd.atjson+test';
-  static schema = [Anchor, Bold, Code, Image, Instagram, Italic, Locale, Manual, Paragraph, Preformatted];
+  static schema = [
+    Anchor,
+    Bold,
+    Code,
+    Image,
+    Instagram,
+    Italic,
+    Locale,
+    Manual,
+    Paragraph,
+    Preformatted
+  ];
 }

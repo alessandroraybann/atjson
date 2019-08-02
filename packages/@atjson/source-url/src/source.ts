@@ -15,17 +15,19 @@ export default class URLSource extends Document {
 
       return new this({
         content: text,
-        annotations: [new URLAnnotation({
-          start: 0,
-          end: text.length,
-          attributes: {
-            host: url.host,
-            hash: url.hash,
-            pathname: url.pathname,
-            protocol: url.protocol,
-            searchParams
-          }
-        })]
+        annotations: [
+          new URLAnnotation({
+            start: 0,
+            end: text.length,
+            attributes: {
+              host: url.host,
+              hash: url.hash,
+              pathname: url.pathname,
+              protocol: url.protocol,
+              searchParams
+            }
+          })
+        ]
       });
     } catch (e) {
       return new this({

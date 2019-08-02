@@ -1,5 +1,4 @@
 export default class OffsetLineBreakElement {
-
   static annotationName = 'line-break';
 
   static elementRenderer(): Element {

@@ -15,7 +15,9 @@ export default class PinterestEmbed extends IframeEmbed {
   get isProfile(): boolean {
     let url = this.url;
     if (url) {
-      return !this.isPin && without<string>(url.pathname.split('/'), '').length === 2;
+      return (
+        !this.isPin && without<string>(url.pathname.split('/'), '').length === 2
+      );
     }
     return false;
   }

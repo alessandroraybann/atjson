@@ -3,7 +3,6 @@ import Renderer from '@atjson/renderer-hir';
 import { BulletList, OrderedList } from '../src';
 
 class PlainTextRenderer extends Renderer {
-
   tight?: boolean;
 
   *root() {

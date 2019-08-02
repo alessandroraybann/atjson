@@ -22,7 +22,10 @@ module.exports = function(context) {
                 {
                   loader: 'ts-loader',
                   options: {
-                    configFile: path.join(path.resolve(context.siteDir), 'tsconfig.json')
+                    configFile: path.join(
+                      path.resolve(context.siteDir),
+                      'tsconfig.json'
+                    )
                   }
                 }
               ]
@@ -30,6 +33,6 @@ module.exports = function(context) {
           ]
         }
       };
-    },
+    }
   };
 };

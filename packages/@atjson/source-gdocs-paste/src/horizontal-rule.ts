@@ -1,7 +1,9 @@
 import { AnnotationJSON } from '@atjson/document';
 import { GDocsStyleSlice } from './types';
 
-export default function extractHorizontalRule(styles: GDocsStyleSlice[]): AnnotationJSON[] {
+export default function extractHorizontalRule(
+  styles: GDocsStyleSlice[]
+): AnnotationJSON[] {
   let annotations: AnnotationJSON[] = [];
 
   for (let i = 0; i < styles.length; i++) {

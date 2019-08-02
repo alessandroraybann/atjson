@@ -27,13 +27,15 @@ describe('Document#convert', () => {
     });
 
     let textDoc = testDoc.convertTo(TextSource);
-    expect(textDoc.all().toJSON()).toEqual([{
-      id: 'Any<id>',
-      type: '-text-paragraph',
-      start: 0,
-      end: 13,
-      attributes: {}
-    }]);
+    expect(textDoc.all().toJSON()).toEqual([
+      {
+        id: 'Any<id>',
+        type: '-text-paragraph',
+        start: 0,
+        end: 13,
+        attributes: {}
+      }
+    ]);
   });
 
   test('converting to the same type will throw an error if one is not defined', () => {

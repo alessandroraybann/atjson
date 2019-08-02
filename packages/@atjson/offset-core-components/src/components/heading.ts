@@ -1,7 +1,6 @@
 import './heading-action-button';
 
 export default class OffsetHeadingElement {
-
   static annotationName = 'heading';
 
   static elementRenderer(node: any): Element {

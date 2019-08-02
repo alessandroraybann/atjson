@@ -28,7 +28,11 @@ function getColor(rank: number) {
   }
 }
 
-function generateGraph(hirNode: HIRNode, edges: Array<[Node, Node]>, nodes: Node[]): Node {
+function generateGraph(
+  hirNode: HIRNode,
+  edges: Array<[Node, Node]>,
+  nodes: Node[]
+): Node {
   let children = hirNode.children({ includeParseTokens: true });
   let text = hirNode.type;
   if (hirNode.type === 'text' && hirNode.text != null) {
@@ -57,18 +61,45 @@ export interface GraphvizOptions {
 }
 
 export default class GraphvizRenderer {
-  static render(document: Document, options: GraphvizOptions = { shape: 'oval' }): string {
+  static render(
+    document: Document,
+    options: GraphvizOptions = { shape: 'oval' }
+  ): string {
     let edges: Array<[Node, Node]> = [];
     let nodes: Node[] = [];
     generateGraph(new HIR(document).rootNode, edges, nodes);
 
     let dot: string;
     if (options.shape === 'record' || options.shape === 'Mrecord') {
-      dot = nodes.map(node => `  ${node.id} [label="{${node.label}|${node.text.replace(/"/g, '\\"')}}" ${node.color}];`).join('\n') + '\n' +
-            edges.map(([parent, child]) => `  ${parent.id} -> ${child.id};`).join('\n');
+      dot =
+        nodes
+          .map(
+            node =>
+              `  ${node.id} [label="{${node.label}|${node.text.replace(
+                /"/g,
+                '\\"'
+              )}}" ${node.color}];`
+          )
+          .join('\n') +
+        '\n' +
+        edges
+          .map(([parent, child]) => `  ${parent.id} -> ${child.id};`)
+          .join('\n');
     } else {
-      dot = nodes.map(node => `  ${node.id} [label="${node.label}\\n${node.text.replace(/"/g, '\\"')}" ${node.color}];`).join('\n') + '\n' +
-            edges.map(([parent, child]) => `  ${parent.id} -> ${child.id};`).join('\n');
+      dot =
+        nodes
+          .map(
+            node =>
+              `  ${node.id} [label="${node.label}\\n${node.text.replace(
+                /"/g,
+                '\\"'
+              )}" ${node.color}];`
+          )
+          .join('\n') +
+        '\n' +
+        edges
+          .map(([parent, child]) => `  ${parent.id} -> ${child.id};`)
+          .join('\n');
     }
 
     return `digraph atjson{

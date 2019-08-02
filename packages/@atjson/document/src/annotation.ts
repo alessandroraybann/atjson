@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { clone, toJSON, unprefix } from './attributes';
-import Change, { AdjacentBoundaryBehaviour, Deletion, Insertion } from './change';
+import Change, {
+  AdjacentBoundaryBehaviour,
+  Deletion,
+  Insertion
+} from './change';
 import Document from './index';
 import JSON from './json';
 
@@ -9,8 +13,18 @@ export interface AnnotationConstructor<T, Attributes> {
   vendorPrefix: string;
   type: string;
   subdocuments: { [key: string]: typeof Document };
-  new(attributes: { id?: string, start: number, end: number, attributes?: Attributes }): T;
-  hydrate(attrs: { id?: string, start: number, end: number, attributes: JSON }): T;
+  new (attributes: {
+    id?: string;
+    start: number;
+    end: number;
+    attributes?: Attributes;
+  }): T;
+  hydrate(attrs: {
+    id?: string;
+    start: number;
+    end: number;
+    attributes: JSON;
+  }): T;
 }
 
 export default abstract class Annotation<Attributes = {}> {
@@ -18,12 +32,21 @@ export default abstract class Annotation<Attributes = {}> {
   static type: string;
   static subdocuments: { [key: string]: typeof Document } = {};
 
-  static hydrate(attrs: { id?: string, start: number, end: number, attributes: JSON }) {
+  static hydrate(attrs: {
+    id?: string;
+    start: number;
+    end: number;
+    attributes: JSON;
+  }) {
     return new (this as any)({
       id: attrs.id,
       start: attrs.start,
       end: attrs.end,
-      attributes: unprefix(this.vendorPrefix, this.subdocuments, attrs.attributes)
+      attributes: unprefix(
+        this.vendorPrefix,
+        this.subdocuments,
+        attrs.attributes
+      )
     });
   }
 
@@ -34,19 +57,26 @@ export default abstract class Annotation<Attributes = {}> {
   end: number;
   attributes: Attributes;
 
-  constructor(attrs: { id?: string, start: number, end: number, attributes?: Attributes }) {
-    let AnnotationClass = this.constructor as AnnotationConstructor<any, Attributes>;
+  constructor(attrs: {
+    id?: string;
+    start: number;
+    end: number;
+    attributes?: Attributes;
+  }) {
+    let AnnotationClass = this.constructor as AnnotationConstructor<
+      any,
+      Attributes
+    >;
     this.type = AnnotationClass.type;
     this.id = attrs.id || uuid();
     this.start = attrs.start;
     this.end = attrs.end;
 
-    this.attributes = attrs.attributes || {} as Attributes;
+    this.attributes = attrs.attributes || ({} as Attributes);
   }
 
   isAlignedWith(annotation: Annotation<any>) {
-    return this.start === annotation.start &&
-           this.end === annotation.end;
+    return this.start === annotation.start && this.end === annotation.end;
   }
 
   /**
@@ -77,11 +107,8 @@ export default abstract class Annotation<Attributes = {}> {
     if (change.end < this.start) {
       this.start -= length;
       this.end -= length;
-
     } else {
-
       if (change.end < this.end) {
-
         // Annotation spans the whole deleted text, so just truncate the end of
         // the annotation (shrink from the right).
         //   [             ]
@@ -89,17 +116,15 @@ export default abstract class Annotation<Attributes = {}> {
         if (change.start > this.start) {
           this.end -= length;
 
-        // Annotation occurs within the deleted text, affecting both start and
-        // end of the annotation, but by only part of the deleted text length.
-        //         [         ]
-        // ---*---------*------------
+          // Annotation occurs within the deleted text, affecting both start and
+          // end of the annotation, but by only part of the deleted text length.
+          //         [         ]
+          // ---*---------*------------
         } else if (change.start <= this.start) {
           this.start -= this.start - change.start;
           this.end -= length;
         }
-
       } else if (change.end >= this.end) {
-
         //             [  ]
         //          [     ]
         //          [         ]
@@ -109,8 +134,8 @@ export default abstract class Annotation<Attributes = {}> {
           this.start = change.start;
           this.end = change.start;
 
-        //       [        ]
-        //    ------*---------*--------
+          //       [        ]
+          //    ------*---------*--------
         } else if (change.start > this.start) {
           this.end = change.start;
         }
@@ -129,15 +154,15 @@ export default abstract class Annotation<Attributes = {}> {
     } else if (change.start > this.start && change.start < this.end) {
       this.end += length;
 
-    // In this case, however, the normal behaviour when inserting text at a
-    // point adjacent to an annotation is to drag along the end of the
-    // annotation, or push forward the beginning, i.e., the transform happens
-    // _inside_ an annotation to the left, or _outside_ an annotation to the right.
-    //
-    // Sometimes, the desire is to change the direction; this is provided below
-    // with the preserveAdjacentBoundaries switch.
+      // In this case, however, the normal behaviour when inserting text at a
+      // point adjacent to an annotation is to drag along the end of the
+      // annotation, or push forward the beginning, i.e., the transform happens
+      // _inside_ an annotation to the left, or _outside_ an annotation to the right.
+      //
+      // Sometimes, the desire is to change the direction; this is provided below
+      // with the preserveAdjacentBoundaries switch.
 
-    // Default edge behaviour.
+      // Default edge behaviour.
     } else if (change.behaviour === AdjacentBoundaryBehaviour.default) {
       if (change.start === this.start) {
         this.start += length;
@@ -146,21 +171,27 @@ export default abstract class Annotation<Attributes = {}> {
         this.end += length;
       }
 
-    // Non-standard behaviour. Do nothing to the adjacent boundary!
-    } else if (change.behaviour === AdjacentBoundaryBehaviour.preserve && change.start === this.start) {
+      // Non-standard behaviour. Do nothing to the adjacent boundary!
+    } else if (
+      change.behaviour === AdjacentBoundaryBehaviour.preserve &&
+      change.start === this.start
+    ) {
       this.end += length;
 
-    // no-op; we would delete the annotation, but we should defer to the
-    // annotation as to whether or not it's deletable, since some zero-length
-    // annotations should be retained.
-    // n.b. the += 0 is just to silence tslint ;-)
-    } else if (change.start === this.end)  {
+      // no-op; we would delete the annotation, but we should defer to the
+      // annotation as to whether or not it's deletable, since some zero-length
+      // annotations should be retained.
+      // n.b. the += 0 is just to silence tslint ;-)
+    } else if (change.start === this.end) {
       this.end += 0;
     }
   }
 
   clone<This extends Annotation>(this: This) {
-    let AnnotationClass = this.constructor as AnnotationConstructor<This, Attributes>;
+    let AnnotationClass = this.constructor as AnnotationConstructor<
+      This,
+      Attributes
+    >;
 
     return new AnnotationClass({
       id: this.id,
@@ -171,7 +202,10 @@ export default abstract class Annotation<Attributes = {}> {
   }
 
   toJSON<This extends Annotation>(this: This) {
-    let AnnotationClass = this.constructor as AnnotationConstructor<This, Attributes>;
+    let AnnotationClass = this.constructor as AnnotationConstructor<
+      This,
+      Attributes
+    >;
     let vendorPrefix = AnnotationClass.vendorPrefix;
     return {
       id: this.id,

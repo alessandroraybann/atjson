@@ -21,6 +21,7 @@
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
     "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.14.2",
     "typedoc-plugin-lerna-packages": "^0.1.5",
     "typescript": "^3.4.3",

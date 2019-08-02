@@ -75,7 +75,8 @@ describe('renderer-html', () => {
       start: 0,
       end: 1,
       attributes: {
-        url: 'https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif',
+        url:
+          'https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif',
         description: new ImageDescriptionSource({
           content: 'Hippo Hula Hooping',
           annotations: []
@@ -89,10 +90,14 @@ describe('renderer-html', () => {
       annotations: [image]
     });
 
-    expect(Renderer.render(doc)).toEqual(`<img src="https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif" title="Haigney Hippo" alt="Hippo Hula Hooping" />`);
+    expect(Renderer.render(doc)).toEqual(
+      `<img src="https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif" title="Haigney Hippo" alt="Hippo Hula Hooping" />`
+    );
 
     delete image.attributes.title;
-    expect(Renderer.render(doc)).toEqual(`<img src="https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif" alt="Hippo Hula Hooping" />`);
+    expect(Renderer.render(doc)).toEqual(
+      `<img src="https://media.newyorker.com/photos/5d30e1b9d957560008da95d7/master/w_1023,c_limit/Haigney-Hippo.gif" alt="Hippo Hula Hooping" />`
+    );
   });
 
   test('italic', () => {
@@ -116,17 +121,21 @@ describe('renderer-html', () => {
   test('link', () => {
     let doc = new OffsetSource({
       content: 'Hello',
-      annotations: [new Link({
-        start: 0,
-        end: 5,
-        attributes: {
-          url: 'https://condenast.com',
-          title: 'Condé Nast'
-        }
-      })]
+      annotations: [
+        new Link({
+          start: 0,
+          end: 5,
+          attributes: {
+            url: 'https://condenast.com',
+            title: 'Condé Nast'
+          }
+        })
+      ]
     });
 
-    expect(Renderer.render(doc)).toEqual(`<a href="https://condenast.com" title="Condé Nast">Hello</a>`);
+    expect(Renderer.render(doc)).toEqual(
+      `<a href="https://condenast.com" title="Condé Nast">Hello</a>`
+    );
   });
 
   describe('ordered list', () => {
@@ -145,7 +154,9 @@ describe('renderer-html', () => {
           new ListItem({ start: 4, end: 7 })
         ]
       });
-      expect(Renderer.render(doc)).toEqual(`<ol><li>one</li>\n<li>two</li></ol>`);
+      expect(Renderer.render(doc)).toEqual(
+        `<ol><li>one</li>\n<li>two</li></ol>`
+      );
     });
 
     test('start position', () => {
@@ -164,7 +175,9 @@ describe('renderer-html', () => {
           new ListItem({ start: 4, end: 7 })
         ]
       });
-      expect(Renderer.render(doc)).toEqual(`<ol starts=3><li>one</li>\n<li>two</li></ol>`);
+      expect(Renderer.render(doc)).toEqual(
+        `<ol starts=3><li>one</li>\n<li>two</li></ol>`
+      );
     });
 
     test('compact', () => {
@@ -183,7 +196,9 @@ describe('renderer-html', () => {
           new ListItem({ start: 4, end: 7 })
         ]
       });
-      expect(Renderer.render(doc)).toEqual(`<ol compact><li>one</li>\n<li>two</li></ol>`);
+      expect(Renderer.render(doc)).toEqual(
+        `<ol compact><li>one</li>\n<li>two</li></ol>`
+      );
     });
   });
 
@@ -203,7 +218,9 @@ describe('renderer-html', () => {
           new ListItem({ start: 4, end: 7 })
         ]
       });
-      expect(Renderer.render(doc)).toEqual(`<ul><li>one</li>\n<li>two</li></ul>`);
+      expect(Renderer.render(doc)).toEqual(
+        `<ul><li>one</li>\n<li>two</li></ul>`
+      );
     });
 
     test('different delimiter', () => {
@@ -222,7 +239,9 @@ describe('renderer-html', () => {
           new ListItem({ start: 4, end: 7 })
         ]
       });
-      expect(Renderer.render(doc)).toEqual(`<ul type="square"><li>one</li>\n<li>two</li></ul>`);
+      expect(Renderer.render(doc)).toEqual(
+        `<ul type="square"><li>one</li>\n<li>two</li></ul>`
+      );
     });
   });
 

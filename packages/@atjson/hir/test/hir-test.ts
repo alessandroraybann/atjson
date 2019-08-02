@@ -15,7 +15,6 @@ describe('@atjson/hir', () => {
   });
 
   describe('constructs a valid hierarchy', () => {
-
     test('from a document without nesting', () => {
       let noNesting = new TestSource({
         content: 'A string with a bold and an italic annotation',
@@ -39,17 +38,54 @@ describe('@atjson/hir', () => {
 
     test('from a document with nesting', () => {
       let nested = new TestSource({
-        content: 'I have a list:\n\nFirst item plus bold text\n\n' +
-                 'Second item plus italic text\n\nItem 2a\n\nItem 2b\n\nAfter all the lists',
+        content:
+          'I have a list:\n\nFirst item plus bold text\n\n' +
+          'Second item plus italic text\n\nItem 2a\n\nItem 2b\n\nAfter all the lists',
         annotations: [
           { id: '1', type: '-test-bold', start: 32, end: 36, attributes: {} },
           { id: '2', type: '-test-italic', start: 60, end: 66, attributes: {} },
-          { id: '3', type: '-test-ordered-list', start: 16, end: 91, attributes: {} },
-          { id: '4', type: '-test-list-item', start: 16, end: 43, attributes: {} },
-          { id: '5', type: '-test-list-item', start: 43, end: 91, attributes: {} },
-          { id: '6', type: '-test-ordered-list', start: 73, end: 91, attributes: {} },
-          { id: '7', type: '-test-list-item', start: 73, end: 82, attributes: {} },
-          { id: '8', type: '-test-list-item', start: 82, end: 91, attributes: {} }
+          {
+            id: '3',
+            type: '-test-ordered-list',
+            start: 16,
+            end: 91,
+            attributes: {}
+          },
+          {
+            id: '4',
+            type: '-test-list-item',
+            start: 16,
+            end: 43,
+            attributes: {}
+          },
+          {
+            id: '5',
+            type: '-test-list-item',
+            start: 43,
+            end: 91,
+            attributes: {}
+          },
+          {
+            id: '6',
+            type: '-test-ordered-list',
+            start: 73,
+            end: 91,
+            attributes: {}
+          },
+          {
+            id: '7',
+            type: '-test-list-item',
+            start: 73,
+            end: 82,
+            attributes: {}
+          },
+          {
+            id: '8',
+            type: '-test-list-item',
+            start: 82,
+            end: 91,
+            attributes: {}
+          }
         ]
       });
 
@@ -57,11 +93,11 @@ describe('@atjson/hir', () => {
         'I have a list:\n\n',
         ol(
           li('First item plus ', bold('bold'), ' text\n\n'),
-          li('Second item plus ', italic('italic'), ' text\n\n',
-            ol(
-              li('Item 2a\n\n'),
-              li('Item 2b\n\n')
-            )
+          li(
+            'Second item plus ',
+            italic('italic'),
+            ' text\n\n',
+            ol(li('Item 2a\n\n'), li('Item 2b\n\n'))
           )
         ),
         'After all the lists'
@@ -91,23 +127,30 @@ describe('@atjson/hir', () => {
 
     test('from a document with overlapping annotations across heirarchical levels', () => {
       let spanning = new TestSource({
-        content: 'A paragraph with some bold\n\ntext that continues into the next.',
+        content:
+          'A paragraph with some bold\n\ntext that continues into the next.',
         annotations: [
-          { id: '1', type: '-test-paragraph', start: 0, end: 28, attributes: {} },
-          { id: '2', type: '-test-paragraph', start: 28, end: 62, attributes: {} },
+          {
+            id: '1',
+            type: '-test-paragraph',
+            start: 0,
+            end: 28,
+            attributes: {}
+          },
+          {
+            id: '2',
+            type: '-test-paragraph',
+            start: 28,
+            end: 62,
+            attributes: {}
+          },
           { id: '3', type: '-test-bold', start: 22, end: 32, attributes: {} }
         ]
       });
 
       let expected = document(
-        paragraph(
-          'A paragraph with some ',
-          bold('bold\n\n'),
-        ),
-        paragraph(
-          bold('text'),
-          ' that continues into the next.'
-        )
+        paragraph('A paragraph with some ', bold('bold\n\n')),
+        paragraph(bold('text'), ' that continues into the next.')
       );
 
       expect(new HIR(spanning).toJSON()).toMatchObject(expected);
@@ -117,7 +160,13 @@ describe('@atjson/hir', () => {
       let zeroLength = new TestSource({
         content: '',
         annotations: [
-          { id: '1', type: '-test-paragraph', start: 0, end: 0, attributes: {} },
+          {
+            id: '1',
+            type: '-test-paragraph',
+            start: 0,
+            end: 0,
+            attributes: {}
+          },
           { id: '2', type: '-test-bold', start: 0, end: 0, attributes: {} }
         ]
       });
@@ -152,15 +201,69 @@ describe('@atjson/hir', () => {
       let zeroLength = new TestSource({
         content: 'One fish\n\nTwo fish\n\n\n\nRed fish\n\nBlue fish',
         annotations: [
-          { id: '1', type: '-test-paragraph', start: 0, end: 8, attributes: {} },
-          { id: '2', type: '-atjson-parse-token', start: 8, end: 10, attributes: {} },
-          { id: '3', type: '-test-paragraph', start: 10, end: 18, attributes: {} },
-          { id: '4', type: '-atjson-parse-token', start: 18, end: 20, attributes: {} },
-          { id: '5', type: '-test-paragraph', start: 20, end: 22, attributes: {} },
-          { id: '6', type: '-atjson-parse-token', start: 20, end: 22, attributes: {} },
-          { id: '7', type: '-test-paragraph', start: 22, end: 30, attributes: {} },
-          { id: '8', type: '-atjson-parse-token', start: 30, end: 32, attributes: {} },
-          { id: '9', type: '-test-paragraph', start: 32, end: 41, attributes: {} }
+          {
+            id: '1',
+            type: '-test-paragraph',
+            start: 0,
+            end: 8,
+            attributes: {}
+          },
+          {
+            id: '2',
+            type: '-atjson-parse-token',
+            start: 8,
+            end: 10,
+            attributes: {}
+          },
+          {
+            id: '3',
+            type: '-test-paragraph',
+            start: 10,
+            end: 18,
+            attributes: {}
+          },
+          {
+            id: '4',
+            type: '-atjson-parse-token',
+            start: 18,
+            end: 20,
+            attributes: {}
+          },
+          {
+            id: '5',
+            type: '-test-paragraph',
+            start: 20,
+            end: 22,
+            attributes: {}
+          },
+          {
+            id: '6',
+            type: '-atjson-parse-token',
+            start: 20,
+            end: 22,
+            attributes: {}
+          },
+          {
+            id: '7',
+            type: '-test-paragraph',
+            start: 22,
+            end: 30,
+            attributes: {}
+          },
+          {
+            id: '8',
+            type: '-atjson-parse-token',
+            start: 30,
+            end: 32,
+            attributes: {}
+          },
+          {
+            id: '9',
+            type: '-test-paragraph',
+            start: 32,
+            end: 41,
+            attributes: {}
+          }
         ]
       });
 
@@ -179,15 +282,69 @@ describe('@atjson/hir', () => {
       let zeroLength = new TestSource({
         content: 'One fish\n\nTwo fish\n\n\n\nRed fish\n\nBlue fish',
         annotations: [
-          { id: '1', type: '-test-paragraph', start: 0, end: 8, attributes: {} },
-          { id: '2', type: '-atjson-parse-token', start: 8, end: 10, attributes: {} },
-          { id: '3', type: '-test-paragraph', start: 10, end: 18, attributes: {} },
-          { id: '4', type: '-atjson-parse-token', start: 18, end: 20, attributes: {} },
-          { id: '5', type: '-test-paragraph', start: 20, end: 22, attributes: {} },
-          { id: '6', type: '-atjson-parse-token', start: 20, end: 22, attributes: {} },
-          { id: '7', type: '-test-paragraph', start: 22, end: 30, attributes: {} },
-          { id: '8', type: '-atjson-parse-token', start: 30, end: 32, attributes: {} },
-          { id: '9', type: '-test-paragraph', start: 32, end: 41, attributes: {} },
+          {
+            id: '1',
+            type: '-test-paragraph',
+            start: 0,
+            end: 8,
+            attributes: {}
+          },
+          {
+            id: '2',
+            type: '-atjson-parse-token',
+            start: 8,
+            end: 10,
+            attributes: {}
+          },
+          {
+            id: '3',
+            type: '-test-paragraph',
+            start: 10,
+            end: 18,
+            attributes: {}
+          },
+          {
+            id: '4',
+            type: '-atjson-parse-token',
+            start: 18,
+            end: 20,
+            attributes: {}
+          },
+          {
+            id: '5',
+            type: '-test-paragraph',
+            start: 20,
+            end: 22,
+            attributes: {}
+          },
+          {
+            id: '6',
+            type: '-atjson-parse-token',
+            start: 20,
+            end: 22,
+            attributes: {}
+          },
+          {
+            id: '7',
+            type: '-test-paragraph',
+            start: 22,
+            end: 30,
+            attributes: {}
+          },
+          {
+            id: '8',
+            type: '-atjson-parse-token',
+            start: 30,
+            end: 32,
+            attributes: {}
+          },
+          {
+            id: '9',
+            type: '-test-paragraph',
+            start: 32,
+            end: 41,
+            attributes: {}
+          },
           { id: '10', type: '-test-bold', start: 21, end: 21, attributes: {} }
         ]
       });
@@ -195,9 +352,7 @@ describe('@atjson/hir', () => {
       let expected = document(
         paragraph('One fish'),
         paragraph('Two fish'),
-          paragraph(
-            bold()
-          ),
+        paragraph(bold()),
         paragraph('Red fish'),
         paragraph('Blue fish')
       );
@@ -209,25 +364,29 @@ describe('@atjson/hir', () => {
   test('sub-documents', () => {
     let subdocument = new TestSource({
       content: '\uFFFC',
-      annotations: [{
-        id: '1',
-        type: '-test-image',
-        start: 0,
-        end: 1,
-        attributes: {
-          '-test-url': 'http://www.example.com/test.jpg',
-          '-test-caption': {
-            content: 'An example caption',
-            annotations: [{
-              id: '2',
-              type: '-test-italic',
-              start: 3,
-              end: 10,
-              attributes: {}
-            }]
+      annotations: [
+        {
+          id: '1',
+          type: '-test-image',
+          start: 0,
+          end: 1,
+          attributes: {
+            '-test-url': 'http://www.example.com/test.jpg',
+            '-test-caption': {
+              content: 'An example caption',
+              annotations: [
+                {
+                  id: '2',
+                  type: '-test-italic',
+                  start: 3,
+                  end: 10,
+                  attributes: {}
+                }
+              ]
+            }
           }
         }
-      }]
+      ]
     });
 
     let hir = new HIR(subdocument).toJSON();
@@ -236,13 +395,15 @@ describe('@atjson/hir', () => {
         url: 'http://www.example.com/test.jpg',
         caption: {
           content: 'An example caption',
-          annotations: [{
-            id: '2',
-            type: '-test-italic',
-            start: 3,
-            end: 10,
-            attributes: {}
-          }]
+          annotations: [
+            {
+              id: '2',
+              type: '-test-italic',
+              start: 3,
+              end: 10,
+              attributes: {}
+            }
+          ]
         }
       })
     );

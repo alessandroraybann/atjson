@@ -1,7 +1,9 @@
 import { AnnotationJSON } from '@atjson/document';
 import { GDocsStyleSlice } from './types';
 
-export default function extractLinkStyles(linkStyles: GDocsStyleSlice[]): AnnotationJSON[] {
+export default function extractLinkStyles(
+  linkStyles: GDocsStyleSlice[]
+): AnnotationJSON[] {
   let currentLink: AnnotationJSON | null = null;
   let links: AnnotationJSON[] = [];
 

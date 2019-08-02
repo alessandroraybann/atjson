@@ -4,7 +4,6 @@ import './annotation-attribute';
 import './annotation-inspector';
 
 export default class AnnotationsInspector extends WebComponent {
-
   static template = ``;
 
   static style = `
@@ -29,31 +28,33 @@ export default class AnnotationsInspector extends WebComponent {
       if (!aInspectors[c.getAttribute('id')]) this.shadowRoot.removeChild(c);
     });
 
-    this.document.annotations.sort((a, b) => a.start - b.start).forEach(a => {
-      let aInspector;
-      if (aInspectors[a.id.toString()]) {
-        aInspector = aInspectors[a.id.toString()];
-      } else {
-        aInspector = document.createElement('annotation-inspector');
-        aInspector.setAttribute('id', a.id);
-        this.shadowRoot.appendChild(aInspector);
-      }
-      aInspector.setAttribute('type', a.type);
-      aInspector.setAttribute('start', a.start);
-      aInspector.setAttribute('end', a.end);
+    this.document.annotations
+      .sort((a, b) => a.start - b.start)
+      .forEach(a => {
+        let aInspector;
+        if (aInspectors[a.id.toString()]) {
+          aInspector = aInspectors[a.id.toString()];
+        } else {
+          aInspector = document.createElement('annotation-inspector');
+          aInspector.setAttribute('id', a.id);
+          this.shadowRoot.appendChild(aInspector);
+        }
+        aInspector.setAttribute('type', a.type);
+        aInspector.setAttribute('start', a.start);
+        aInspector.setAttribute('end', a.end);
 
-      if (a.attributes) {
-        Object.keys(a.attributes).forEach(key => {
-          let aAttribute = aInspector.querySelector(`[name="${key}"]`);
-          if (aAttribute === null) {
-            aAttribute = document.createElement('annotation-attribute');
-            aAttribute.setAttribute('name', key);
-            aInspector.appendChild(aAttribute);
-          }
-          aAttribute.setAttribute('value', a.attributes[key]);
-        });
-      }
-    });
+        if (a.attributes) {
+          Object.keys(a.attributes).forEach(key => {
+            let aAttribute = aInspector.querySelector(`[name="${key}"]`);
+            if (aAttribute === null) {
+              aAttribute = document.createElement('annotation-attribute');
+              aAttribute.setAttribute('name', key);
+              aInspector.appendChild(aAttribute);
+            }
+            aAttribute.setAttribute('value', a.attributes[key]);
+          });
+        }
+      });
   }
 
   setDocument(doc) {
@@ -64,7 +65,9 @@ export default class AnnotationsInspector extends WebComponent {
       if (this._updateCallback) return;
       this._updateCallback = () => {
         this.updateBody();
-        setTimeout(() => { delete this._updateCallback; }, 0);
+        setTimeout(() => {
+          delete this._updateCallback;
+        }, 0);
       };
       window.requestIdleCallback(this._updateCallback);
     });
